@@ -1,4 +1,4 @@
-module deployment_addr::onchain_poems {
+module deployment_addr::onchain_bio {
 
 public struct Sword has key, store {
         id: UID,

@@ -40,7 +40,7 @@ function updateMoveTomlAddress(tomlPath: string, newAddress: string): void {
 }
 
 function initCustomNetwork(restUrl: string, faucetUrl?: string): void {
-  let command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | aptos init --network custom --rest-url ${restUrl}`;
+  let command = `[ ! -f .aptos/config.yaml ] || rm .aptos/config.yaml; echo '' | iota init --network custom --rest-url ${restUrl}`;
   if (faucetUrl) {
     command += ` --faucet-url ${faucetUrl}`;
   }

@@ -11,6 +11,6 @@
     "rootDir": "./",
     "moduleResolution": "node"
   },
-  "include": ["scripts/**/*"],
+  "include": ["utils/**/*"],
   "exclude": ["node_modules", "build"]
 }
