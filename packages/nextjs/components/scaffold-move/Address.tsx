@@ -4,8 +4,7 @@ import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { getBlockExplorerAddressLink } from "~~/utils/scaffold-move";
+import { getNetwork } from "@iota/iota-sdk/client";
 
 type AddressProps = {
   address?: string;
@@ -32,7 +31,6 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   // const [ensAvatar, setEnsAvatar] = useState<string | null>();
   const [addressCopied, setAddressCopied] = useState(false);
 
-  const { targetNetwork } = useTargetNetwork();
   // Skeleton UI
   if (!address) {
     return (
@@ -44,8 +42,8 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
       </div>
     );
   }
-
-  const blockExplorerAddressLink = getBlockExplorerAddressLink(targetNetwork, address);
+  const networkConfig = getNetwork("testnet");
+  const blockExplorerAddressLink = networkConfig.explorer;
   let displayAddress = address?.slice(0, 6) + "..." + address?.slice(-4);
 
   // if (ens) {

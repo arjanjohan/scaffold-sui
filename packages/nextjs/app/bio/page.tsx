@@ -117,7 +117,7 @@ const OnchainBio: NextPage = () => {
           >
             useSubmitTransaction
           </Link>{" "}
-          hook from Scaffold Move.
+          hook from Scaffold IOTA.
         </p>
         <div className="flex items-center ml-2">
           <span className="text-xs font-medium mr-2 leading-none">Your Name</span>
@@ -139,7 +139,7 @@ const OnchainBio: NextPage = () => {
         <h2 className="text-lg font-semibold">Fetch Bio Resource</h2>
         <p className="text-sm">
           {" "}
-          Fetch bio data directly from the resource account on the Aptos blockchain using the Scaffold Move{" "}
+          Fetch bio data directly from the resource account on the Aptos blockchain using the Scaffold IOTA{" "}
           <Link
             className="underline"
             href="https://scaffold-move-docs.vercel.app/hooks/usegetaccountresource"
@@ -171,7 +171,7 @@ const OnchainBio: NextPage = () => {
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">View Bio</h2>
         <p className="text-sm">
-          Read bio data from the Aptos blockchain using a view function using the Scaffold Move{" "}
+          Read bio data from the Aptos blockchain using a view function using the Scaffold IOTA{" "}
           <Link
             className="underline"
             href="https://scaffold-move-docs.vercel.app/hooks/useview"

@@ -1,24 +1,26 @@
 import "@rainbow-me/rainbowkit/styles.css";
-import { ScaffoldMoveAppWithProviders } from "~~/components/ScaffoldMoveAppWithProviders";
+import { ScaffoldIotaAppWithProviders } from "~~/components/ScaffoldIotaAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
-import { getMetadata } from "~~/utils/scaffold-move/getMetadata";
+import { getMetadata } from "~~/utils/scaffold-iota/getMetadata";
+import "@iota/dapp-kit/dist/index.css";
+import "@radix-ui/themes/styles.css";
 
 export const metadata = getMetadata({
-  title: "Scaffold-Move App",
-  description: "Built with 🏗 Scaffold-Move",
+  title: "Scaffold IOTA App",
+  description: "Built with 🏗 Scaffold IOTA",
 });
 
-const ScaffoldMoveApp = ({ children }: { children: React.ReactNode }) => {
+const ScaffoldIotaApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
       <body>
         <ThemeProvider enableSystem={false} defaultTheme="dark">
-          <ScaffoldMoveAppWithProviders>{children}</ScaffoldMoveAppWithProviders>
+          <ScaffoldIotaAppWithProviders>{children}</ScaffoldIotaAppWithProviders>
         </ThemeProvider>
       </body>
     </html>
   );
 };
 
-export default ScaffoldMoveApp;
+export default ScaffoldIotaApp;

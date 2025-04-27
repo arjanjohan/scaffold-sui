@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { NetworkOptions } from "./NetworkOptions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
@@ -14,10 +13,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-move";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
-import { getFaucetAddressLink, getTargetNetworks } from "~~/utils/scaffold-move";
 
-const allowedNetworks = getTargetNetworks();
+import { getNetwork } from "@iota/iota-sdk/client";
 
 type AddressInfoDropdownProps = {
   address: string;
@@ -35,7 +32,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   useOutsideClick(dropdownRef, closeDropdown);
 
   const { disconnect, wallet } = useWallet();
-  const { targetNetwork } = useTargetNetwork();
+  const networkConfig = getNetwork("testnet");
 
   // Check if connected wallet is Petra or Pontem
   const isNetworkSwitchingDisabled = wallet?.name === "Petra" || wallet?.name === "Pontem";
@@ -52,7 +49,6 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
           tabIndex={0}
           className="dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
         >
-          <NetworkOptions hidden={!selectingNetwork} />
           <li className={selectingNetwork ? "hidden" : ""}>
             {addressCopied ? (
               <div className="btn-sm !rounded-xl flex gap-3 py-3">
@@ -101,7 +97,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
               </a>
             </button>
           </li>
-          {allowedNetworks.length > 1 ? (
+          {/* {allowedNetworks.length > 1 ? (
             <li className={selectingNetwork ? "hidden" : ""}>
               <button
                 className={`btn-sm !rounded-xl flex gap-3 py-3 ${
@@ -118,13 +114,13 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
                 <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
               </button>
             </li>
-          ) : null}
-          <li className={selectingNetwork ? "hidden" : ""}>
+          ) : null} */}
+          <li className={selectingNetwork || !networkConfig.faucet ? "hidden" : ""}>
             <button className="btn-sm !rounded-xl flex gap-3 py-3" type="button">
               <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
               <a
                 target="_blank"
-                href={getFaucetAddressLink(targetNetwork)}
+                href={networkConfig.faucet}
                 rel="noopener noreferrer"
                 className="whitespace-nowrap"
               >

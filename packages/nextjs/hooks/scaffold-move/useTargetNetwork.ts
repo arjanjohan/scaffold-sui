@@ -12,14 +12,14 @@ export function useTargetNetwork(): { targetNetwork: Chain } {
   const targetNetwork = useGlobalState(({ targetNetwork }) => targetNetwork);
   const setTargetNetwork = useGlobalState(({ setTargetNetwork }) => setTargetNetwork);
 
-  useEffect(() => {
-    const newSelectedNetwork = scaffoldConfig.targetNetworks.find(
-      targetNetwork => targetNetwork.id === Number(network?.chainId),
-    );
-    if (newSelectedNetwork && newSelectedNetwork.id !== targetNetwork.id) {
-      setTargetNetwork(newSelectedNetwork);
-    }
-  }, [network, setTargetNetwork, targetNetwork.id]);
+  // useEffect(() => {
+  //   const newSelectedNetwork = scaffoldConfig.targetNetworks.find(
+  //     targetNetwork => targetNetwork.url === network?.url,
+  //   );
+  //   if (newSelectedNetwork && newSelectedNetwork.url !== targetNetwork.url) {
+  //     setTargetNetwork(newSelectedNetwork);
+  //   }
+  // }, [network, setTargetNetwork, targetNetwork]);
 
   return { targetNetwork };
 }

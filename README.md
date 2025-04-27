@@ -1,17 +1,17 @@
-# 🏗 Scaffold Move
+# 🏗 Scaffold IOTA
 
 <div align="center">
 
 ![logo](/assets/logo_small.png)
 <h4 align="center">
-  <a href="https://scaffold-move-docs.vercel.app/">Documentation</a> |
-  <a href="https://scaffold-move-chi.vercel.app/">Website</a>
+  <a href="TODO">Documentation</a> |
+  <a href="TODO">Website</a>
 </h4>
 </div>
 
-🧪 Scaffold Move is an open-source, cutting-edge toolkit for building decentralized applications (dApps) on Aptos or any other Move-based blockchain. It's designed to streamline the process of creating and deploying Move modules and building user interfaces that interact seamlessly with those modules.
+🧪 Scaffold IOTA is an open-source, cutting-edge toolkit for building decentralized applications (dApps) on IOTA. It's designed to streamline the process of creating and deploying Move modules and building user interfaces that interact seamlessly with those modules.
 
-⚙️ Built using Move, Aptos TS SDK, Next.js, Tailwind CSS, and TypeScript.
+⚙️ Built using Move, IOTA TS SDK, Next.js, Tailwind CSS, and TypeScript.
 
 - 🛫 **Deployment Scripts**: Simplify and automate your deployment workflow.
 - ✅ **Module Hot Reload**: Your frontend automatically adapts to changes in your Move modules as you edit them.
@@ -30,29 +30,37 @@ Before you begin, you need to install the following tools:
 - [Node (>= v18.17)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
-- [Aptos CLI](https://aptos.dev/en/build/cli)
+- [IOTA CLI](https://docs.iota.org/developer/getting-started/install-iota)
 
 ## Quickstart
 
-To get started with Scaffold Move, follow the steps below:
+To get started with Scaffold IOTA, follow the steps below:
 
 1. Clone this repo & install dependencies
 
 ```
-git clone https://github.com/arjanjohan/scaffold-move.git
-cd scaffold-move
+git clone https://github.com/arjanjohan/scaffold-iota.git
+cd scaffold-iota
 yarn install
 ```
 
-2. THen, initialize a new account.
+2. Then, initialize the IOTA client with this command.
 
 ```
-yarn account
+yarn client
 ```
 
-This command overwrites `packages/move/.aptos/config.yaml` with a new Aptos account. The new address is copied over to the first address in the Move.toml file. If no address exists in this file, it is added on a new line.
+This command sets up the IOTA client if it hasnt already. It prompts you to select a network (defaults to IOTA testnet if you just press `Enter`). Finally, you will be prompted to select the key scheme you want to use. If you are unsure which scheme to use just go with the default ed25519 scheme (option 0).
 
-Use the `--network` tag to define a network to create the account on. Alternatively, you can change the `defaultNetwork` value in `packages/move/move.config.js`.
+To view the configuration use this command:
+```
+yarn view-clients
+```
+
+To switch to a certain configured enviroment, use this command:
+```
+yarn switch-client <envAlias>
+```
 
 3. Deploy the test modules:
 
@@ -60,7 +68,7 @@ Use the `--network` tag to define a network to create the account on. Alternativ
 yarn deploy
 ```
 
-This command deploys the move modules to the selected network. The modules are located in `packages/move/sources` and can be modified to suit your needs. The `yarn deploy` command uses `aptos move publish` to publish the modules to the network. After this is executes the script located in `scripts/load-modules.js` to make the new modules available in the nextjs frontend.
+This command deploys the move modules to the network configured in the previous step. The modules are located in `packages/move/sources` and can be modified or replaced to suit your needs. The `yarn deploy` command uses `iota client publish` to publish the modules to the network. After this is executes the script located in `scripts/load-modules.ts` to make the new modules available in the nextjs frontend.
 
 4. On a second terminal, start your NextJS app:
 
@@ -72,40 +80,42 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 
 **What's next**:
 
-- Edit your Move module `OnchainBio.move` in `packages/move/sources`
+- Edit your Move module `counter.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-<!-- - Edit your Move modules test in: `packages/move/test`. To run test use `yarn hardhat:test` -->
+- Edit your Move tests in: `packages/move/test`. To run test use `yarn test`
 
 ## Future Development
 
-Scaffold Move has successfully implemented core features essential for Move developers, providing a robust foundation for building decentralized applications. The current version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
+Scaffold IOTA has successfully implemented core features essential for IOTA developers, providing a great starting point with NextJS. This version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
 
-Looking ahead, we have an exciting roadmap of enhancements and new features planned:
+In the scope of this hackathon, it was not possible to complete everything. Here's a list of issues (big and small) that are on the roadmap:
 
-- Add a testing framework for Move modules.
-- Add custom networks to network switching. This is currently not available in the Aptos Wallet Adapter. Once [our PR](https://github.com/aptos-labs/aptos-wallet-adapter/pull/425) is merged, this feature will be added to Scaffold Move.
-- Enhance documentation and create tutorials for easier onboarding.
-- Develop additional pre-built components for common dApp functionalities.
-- Integrate different templates/configurations (similar to [create-aptos-dapp](https://aptos.dev/en/build/create-aptos-dapp))
+- Add documentation and create tutorials for easier onboarding.
+- Develop more pre-built components for common dApp functionalities.
+- Integrate different templates/configurations for Move contracts
+- Update `filterAndSortTokenBalances` to use metadata instead of cointype
 
-We're committed to evolving Scaffold Move based on community feedback and emerging best practices in the Move ecosystem. For a detailed list of upcoming features and to contribute ideas, please check our [GitHub Issues](https://github.com/arjanjohan/scaffold-move/issues).
+We're committed to evolving Scaffold IOTA based on community feedback and emerging best practices in the IOTA ecosystem. For a detailed list of upcoming features and to contribute ideas, please check our [GitHub Issues](https://github.com/arjanjohan/scaffold-iota/issues).
 
-Your input is valuable! If you have suggestions or want to contribute, we encourage you to get involved and help shape the future of Scaffold Move. Join our [developer Telegram channel](https://t.me/+lOn2MJawQlc1YjA8) to connect with the community and stay updated on the latest developments.
+## Issues I ran into during development
+
+#### Wallet popup not showing
+In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion](https://discord.com/channels/1341659158071611445/1360255915110039612) where the solution was posted. Maybe the
+
 
 ## Links
 
 - [Documentation](https://scaffold-move-docs.vercel.app/)
 - [Example deployment](https://scaffold-move-chi.vercel.app/)
-- [Telegram Community](https://t.me/+lOn2MJawQlc1YjA8)
-- [Github](https://github.com/arjanjohan/scaffold-move)
+- [Github](https://github.com/arjanjohan/scaffold-iota)
 
 ## Credits
 
 None of this would have been possible without the great work done in:
 - [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2)
-- [Aptos Explorer](https://github.com/aptos-labs/explorer)
-- [Aptos Wallet Adapter](https://github.com/aptos-labs/aptos-wallet-adapter)
+- [IOTA dApp Kit](https://docs.iota.org/ts-sdk/dapp-kit/)
+- [IOTA TypeScript SDK](https://docs.iota.org/ts-sdk/typescript/)
 
-## Built by
+## Built during the IOTA Moveathon APAC Hackathon by
 
 - [arjanjohan](https://x.com/arjanjohan/)

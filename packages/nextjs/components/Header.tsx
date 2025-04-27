@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
-import { CustomConnectButton } from "~~/components/scaffold-move";
 import { useOutsideClick } from "~~/hooks/scaffold-move";
+import { CustomConnectButton } from "~~/components/scaffold-move";
+
 
 type HeaderMenuLink = {
   label: string;
@@ -97,8 +98,8 @@ export const Header = () => {
             <Image alt="SM logo" className="cursor-pointer" fill src="/logo.png" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-Move</span>
-            <span className="text-xs">Move dev stack</span>
+            <span className="font-bold leading-tight">Scaffold IOTA</span>
+            <span className="text-xs">IOTA dev stack</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">

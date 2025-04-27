@@ -1,13 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-move";
+import { useWallets, useAccounts } from "@iota/dapp-kit";
+import {
+  useCurrentAccount,
+  useSignAndExecuteTransaction,
+  useIotaClient,
+  useIotaClientQuery,
+} from "@iota/dapp-kit";
+import { useGetObjectOrPastObject } from '~~/hooks/scaffold-iota';
+import { translate, type DataType } from '~~/types/scaffold-iota/ObjectResultType';
 
 const Home: NextPage = () => {
-  const { account: connectedAccount } = useWallet();
+  const wallets = useWallets();
+  const accounts = useAccounts();
+  const currentAccount = useCurrentAccount();
+  const iotaClient = useIotaClient();
+  console.log(accounts);
+  console.log(wallets);
+  console.log(currentAccount);
+  console.log(iotaClient);
+
+  let objID = "0x70376d13660b0d6d6007c5413e5b9b5c55d2b40547b211085f36cf629ce4bbf2";
+  const { data, isPending, isError, isFetched } = useGetObjectOrPastObject(objID);
+  if (data) {
+    let object = translate(data);
+    console.log(object);
+  }
 
   return (
     <>
@@ -15,12 +37,12 @@ const Home: NextPage = () => {
         <div className="px-5">
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold Move</span>
+            <span className="block text-4xl font-bold">Scaffold IOTA</span>
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
 
-            <Address address={connectedAccount?.address?.toString()} />
+            <Address address={accounts[0]?.address?.toString()} />
           </div>
           <p className="text-center text-lg">
             Get started by editing{" "}
@@ -38,6 +60,10 @@ const Home: NextPage = () => {
               packages/move/sources
             </code>
           </p>
+        </div>
+
+        <div>
+        {}
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">

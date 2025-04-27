@@ -1,10 +1,10 @@
 import { DebugModules } from "./_components/DebugModules";
 import type { NextPage } from "next";
-import { getMetadata } from "~~/utils/scaffold-move/getMetadata";
+import { getMetadata } from "~~/utils/scaffold-iota/getMetadata";
 
 export const metadata = getMetadata({
   title: "Debug Modules",
-  description: "Debug your deployed 🏗 Scaffold Move modules in an easy way",
+  description: "Debug your deployed 🏗 Scaffold IOTA modules in an easy way",
 });
 
 const Debug: NextPage = () => {

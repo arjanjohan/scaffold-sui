@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { AptosWalletAdapterProvider } from "@aptos-labs/wallet-adapter-react";
+import { IotaClientProvider, WalletProvider } from "@iota/dapp-kit";
 
-export const WalletProvider = ({ children }: { children: ReactNode }) => {
-  return <AptosWalletAdapterProvider autoConnect={true}>{children}</AptosWalletAdapterProvider>;
+export const WalletContext = ({ children }: { children: ReactNode }) => {
+  return <WalletProvider autoConnect>{children}</WalletProvider>;
 };
