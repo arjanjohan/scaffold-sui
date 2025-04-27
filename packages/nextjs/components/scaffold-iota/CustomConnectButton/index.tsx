@@ -1,7 +1,7 @@
 "use client";
 
 import { getNetwork } from "@iota/iota-sdk/client";
-import { Balance } from "../../scaffold-move/Balance";
+import { Balance } from "~~/components/scaffold-iota";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { ConnectButton, useCurrentAccount } from "@iota/dapp-kit";

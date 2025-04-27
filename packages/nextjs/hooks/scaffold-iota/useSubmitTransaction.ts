@@ -4,8 +4,12 @@ import {
     useIotaClient,
     useSignAndExecuteTransaction,
 } from "@iota/dapp-kit";
-import { Transaction } from '@iota/iota-sdk/transactions';
-import { createMoveCallTransaction } from "~~/utils/scaffold-move/transaction";
+import {
+    getPureBcsSchema,
+    normalizedTypeToMoveTypeSignature,
+    Transaction,
+} from '@iota/iota-sdk/transactions';
+import { useNormalizedMoveModule } from "./useNormalizedMoveModule";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 
@@ -23,32 +27,14 @@ export type TransactionResponseOnError = {
     message: string;
 };
 
-interface MoveModuleABI {
-    address: string;
-}
-
-interface MoveModule {
-    abi: MoveModuleABI;
-}
-
-// This should be imported from your module types
-type ModuleMap = {
-    [key: string]: MoveModule;
-};
-
-// Mock implementation of useGetModule - replace with actual implementation
-const useGetModule = (moduleName: string): MoveModule | undefined => {
-    // Implementation should come from your module system
-    return undefined;
-};
-
-const useSubmitTransaction = (moduleName: string) => {
+const useSubmitTransaction = (moduleName: string, moduleAddress: string) => {
     const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
     const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
-    const [moduleAddress, setModuleAddress] = useState<string | null>(null);
 
     const currentAccount = useCurrentAccount();
     const iotaClient = useIotaClient();
+    const { data: normalizedModule } = useNormalizedMoveModule(moduleAddress, moduleName);
+
     const { mutateAsync: signAndExecuteTransaction } = useSignAndExecuteTransaction({
         execute: async ({ bytes, signature }) =>
             await iotaClient.executeTransactionBlock({
@@ -63,14 +49,6 @@ const useSubmitTransaction = (moduleName: string) => {
             }),
     });
 
-    const moveModule = useGetModule(moduleName);
-
-    useEffect(() => {
-        if (moveModule) {
-            setModuleAddress(moveModule.abi.address);
-        }
-    }, [moveModule]);
-
     useEffect(() => {
         if (transactionResponse !== null) {
             setTransactionInProcess(false);
@@ -79,49 +57,82 @@ const useSubmitTransaction = (moduleName: string) => {
 
     async function submitTransaction(
         functionName: string,
-        args: Array<{ type: string; value: any }> = [],
+        args: any[] = [],
         tyArgs: string[] = [],
-    ) {
+    ): Promise<TransactionResponse> {
         if (!moduleAddress || !currentAccount) {
-            setTransactionResponse({
+            const response: TransactionResponse = {
                 transactionSubmitted: false,
                 message: !moduleAddress ? "Module not found" : "No account connected",
-            });
-            return;
+            };
+            setTransactionResponse(response);
+            return response;
+        }
+
+        if (!normalizedModule) {
+            const response: TransactionResponse = {
+                transactionSubmitted: false,
+                message: "Module information not loaded",
+            };
+            setTransactionResponse(response);
+            return response;
+        }
+
+        const functionDetails = normalizedModule.exposedFunctions[functionName];
+        if (!functionDetails) {
+            const response: TransactionResponse = {
+                transactionSubmitted: false,
+                message: `Unknown function ${moduleName}::${functionName}`,
+            };
+            setTransactionResponse(response);
+            return response;
         }
 
         setTransactionInProcess(true);
 
         try {
-            const transaction = createMoveCallTransaction({
+            const tx = new Transaction();
+            tx.moveCall({
                 target: `${moduleAddress}::${moduleName}::${functionName}`,
-                typeArguments: tyArgs,
-                arguments: args,
+                typeArguments: tyArgs ?? [],
+                arguments: args.map((param, i) => {
+                    const paramType = functionDetails.parameters[i];
+                    const moveTypeSignature = normalizedTypeToMoveTypeSignature(paramType);
+                    const pureBcsSchema = getPureBcsSchema(moveTypeSignature.body);
+
+                    return pureBcsSchema ? pureBcsSchema.serialize(param) : tx.object(param);
+                }),
             });
 
-            const result = await signAndExecuteTransaction({ transaction });
+            const result = await signAndExecuteTransaction({ transaction: tx });
+            console.log("result: ", result);
 
             if (result.effects?.status.status === 'failure') {
-                setTransactionResponse({
+                const response: TransactionResponse = {
                     transactionSubmitted: true,
                     transactionHash: result.digest,
                     success: false,
                     message: result.effects.status.error || 'Transaction failed',
-                });
-                return;
+                };
+                setTransactionResponse(response);
+                return response;
             }
 
-            setTransactionResponse({
+            const response: TransactionResponse = {
                 transactionSubmitted: true,
                 transactionHash: result.digest,
                 success: true,
-            });
+            };
+            setTransactionResponse(response);
+            return response;
 
         } catch (error) {
-            setTransactionResponse({
+            const response: TransactionResponse = {
                 transactionSubmitted: false,
                 message: error instanceof Error ? error.message : "Unknown error occurred",
-            });
+            };
+            setTransactionResponse(response);
+            return response;
         }
     }
 

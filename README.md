@@ -84,7 +84,15 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit your Move tests in: `packages/move/test`. To run test use `yarn test`
 
-## Future Development
+## TODO:
+
+- Add submit tx hook
+- Add view tx hook
+- typesafety for hooks
+- debug tab
+- show balances
+
+## Next steps
 
 Scaffold IOTA has successfully implemented core features essential for IOTA developers, providing a great starting point with NextJS. This version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
 
@@ -105,8 +113,8 @@ In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion
 
 ## Links
 
-- [Documentation](https://scaffold-move-docs.vercel.app/)
-- [Example deployment](https://scaffold-move-chi.vercel.app/)
+- [Documentation]()
+- [Example deployment](https://scaffold-iota.vercel.app/)
 - [Github](https://github.com/arjanjohan/scaffold-iota)
 
 ## Credits

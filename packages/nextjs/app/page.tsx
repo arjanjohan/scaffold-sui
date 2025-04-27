@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-move";
+import { Address } from "~~/components/scaffold-iota";
 import { useWallets, useAccounts } from "@iota/dapp-kit";
 import {
   useCurrentAccount,

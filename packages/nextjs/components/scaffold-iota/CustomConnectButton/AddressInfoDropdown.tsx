@@ -11,8 +11,8 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar } from "~~/components/scaffold-move";
-import { useOutsideClick } from "~~/hooks/scaffold-move";
+import { BlockieAvatar } from "~~/components/scaffold-iota";
+import { useOutsideClick } from "~~/hooks/scaffold-iota";
 
 import { getNetwork } from "@iota/iota-sdk/client";
 

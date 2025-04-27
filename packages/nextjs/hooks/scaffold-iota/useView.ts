@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useGetModule } from "./useGetModule";
 import { Aptos } from "@aptos-labs/ts-sdk";
-import { useAptosClient } from "~~/hooks/scaffold-move/useAptosClient";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
 import { processArguments } from "~~/utils/scaffold-move/arguments";
 import { ModuleName, ModuleViewFunctionNames, ModuleViewFunctions } from "~~/utils/scaffold-move/module";
 import { useIotaClient } from "@iota/dapp-kit";
@@ -54,12 +51,8 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const moveModule = useGetModule(moduleName.toString());
-  if (!moveModule) {
-    throw new Error("Module not found");
-  }
+  const moduleAddress = "0x"; // TODO: Get this from deployments file
 
-  const moduleAddress = moveModule.abi.address;
 
   // Memoize args to avoid stringifying in the dependency array
   const argsString = JSON.stringify(args);
@@ -81,17 +74,16 @@ export const useView = <TModuleName extends ModuleName, TFunctionName extends Mo
         function_args: processArguments(args || []),
       };
 
-      console.log("request", request);
-      const result = await view(request, aptos);
-      console.log("result: ", result);
-      setData(result);
+      // console.log("request", request);
+      // console.log("result: ", result);
+      // setData(result);
     } catch (err) {
       console.log("error: ", err);
       setError(err instanceof Error ? err : new Error("An error occurred"));
     } finally {
       setIsLoading(false);
     }
-  }, [moduleAddress, moduleName, functionName, tyArgs, argsString, aptos]);
+  }, [moduleAddress, moduleName, functionName, tyArgs, argsString]);
 
   useEffect(() => {
     fetchData();

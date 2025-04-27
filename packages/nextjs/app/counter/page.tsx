@@ -9,12 +9,12 @@ import {
   useIotaClient,
   useIotaClientQuery,
 } from "@iota/dapp-kit";
-import { Address } from "~~/components/scaffold-move";
-import { useGetAccountResource } from "~~/hooks/scaffold-move";
-import { useGetModule } from "~~/hooks/scaffold-move/useGetModule";
-import useSubmitTransaction from "~~/hooks/scaffold-move/useSubmitTransaction";
-import { useView } from "~~/hooks/scaffold-move/useView";
-import { AddressInput } from "~~/types/scaffold-move";
+import { Address } from "~~/components/scaffold-iota";
+import useSubmitTransaction from "~~/hooks/scaffold-iota/useSubmitTransaction";
+import { useView } from "~~/hooks/scaffold-iota/useView";
+import { AddressInput } from "~~/types/scaffold-iota";
+import { createMoveCallTransaction } from "~~/utils/scaffold-move/transaction";
+import { Transaction } from "@iota/iota-sdk/transactions";
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -24,16 +24,15 @@ const Alert = ({ message }: { message: string }) => (
 );
 
 const CounterPage: NextPage = () => {
+  const moduleName = "counter";
+  const moduleAddress = "0xd5b0600278eaeb8c930bebc86e9b1565a4550eb0ca12db2044f46e281c731e81"; // TODO: Get this from deployments file
+
   const account = useCurrentAccount();
   const [newValue, setNewValue] = useState<string>("");
   const [counterValue, setCounterValue] = useState<number | null>(null);
+  const [counterId, setCounterId] = useState<string>("0x8b96708c3323b735113190e96ff9d42ff79bc9d6ea17f4f4b6ff202cee0624a6");
 
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction("counter");
-
-  const moveModule = useGetModule("counter");
-  const counterAbi = moveModule?.abi;
-
-  const { data: counterResource, refetch: refetchCounter } = useGetAccountResource("counter", "Counter");
+  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(moduleName, moduleAddress);
 
   const {
     data: counterView,
@@ -45,16 +44,15 @@ const CounterPage: NextPage = () => {
     args: [account?.address?.toString() as AddressInput],
   });
 
-  // If the counterModule or ABI is not found, show an alert message and return early
-  if (!counterAbi) {
-    return <Alert message="Counter module not found!" />;
-  }
-
   // Create a new counter
   const createCounter = async () => {
     try {
-      await submitTransaction("create", []);
-      await refetchCounter();
+      const result = await submitTransaction("create", []);
+      // Get the created counter ID from the transaction result
+      if (result && 'transactionSubmitted' in result && result.transactionSubmitted && result.success) {
+        // TODO: Extract counter ID from transaction result
+        await refetchCounterView();
+      }
     } catch (error) {
       console.error("Error creating counter:", error);
     }
@@ -62,9 +60,13 @@ const CounterPage: NextPage = () => {
 
   // Increment the counter
   const incrementCounter = async () => {
+    console.log("incrementCounter: ", counterId);
+    if (!counterId) return;
     try {
-      await submitTransaction("increment", []);
-      await refetchCounter();
+      const result = await submitTransaction("increment", [counterId]);
+      if (result.transactionSubmitted && result.success) {
+        await refetchCounterView();
+      }
     } catch (error) {
       console.error("Error incrementing counter:", error);
     }
@@ -72,15 +74,13 @@ const CounterPage: NextPage = () => {
 
   // Set counter value (only owner)
   const handleSetValue = async () => {
-    if (!newValue) {
-      console.error("New value is missing");
-      return;
-    }
-
+    if (!counterId || !newValue) return;
     try {
-      await submitTransaction("set_value", [parseInt(newValue)]);
-      await refetchCounter();
-      setNewValue("");
+      const result = await submitTransaction("set_value", [counterId, parseInt(newValue)]);
+      if (result.transactionSubmitted && result.success) {
+        await refetchCounterView();
+        setNewValue("");
+      }
     } catch (error) {
       console.error("Error setting counter value:", error);
     }
@@ -88,9 +88,13 @@ const CounterPage: NextPage = () => {
 
   // Delete counter (only owner)
   const deleteCounter = async () => {
+    if (!counterId) return;
     try {
-      await submitTransaction("delete", []);
-      await refetchCounter();
+      const result = await submitTransaction("delete", [counterId]);
+      if (result.transactionSubmitted && result.success) {
+        await refetchCounterView();
+        setCounterId("");
+      }
     } catch (error) {
       console.error("Error deleting counter:", error);
     }
@@ -98,28 +102,72 @@ const CounterPage: NextPage = () => {
 
   return (
     <div className="flex items-center flex-col flex-grow">
+      {/* Contract Info Section */}
       <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
         <div className="text-xl">IOTA Move Counter</div>
         <p className="text-sm mb-2">A simple shared counter on the IOTA blockchain.</p>
         <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
-          <p className="my-2 font-medium">Connected Address:</p>
-          <Address address={account?.address?.toString()} />
+          <p className="my-2 font-medium">Smart contract address:</p>
+          <Address address={moduleAddress} />
         </div>
       </div>
 
+      {/* Create Counter Section */}
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
-        <h2 className="text-lg font-semibold">Counter Controls</h2>
-        <p className="text-sm">Create and interact with a shared counter on the IOTA blockchain.</p>
-
-        <button className="btn btn-secondary mt-2" disabled={!account} onClick={createCounter}>
+        <h2 className="text-lg font-semibold">Create New Counter</h2>
+        <p className="text-sm">Create a new shared counter on the IOTA blockchain.</p>
+        <button
+          className="btn btn-primary w-full max-w-xs"
+          disabled={!account}
+          onClick={createCounter}
+        >
           Create Counter
         </button>
+      </div>
 
-        <button className="btn btn-secondary mt-2" disabled={!account} onClick={incrementCounter}>
-          Increment Counter
-        </button>
+      {/* Counter Controls Section */}
+      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
+        <h2 className="text-lg font-semibold">Counter Controls</h2>
+        <p className="text-sm">View and interact with an existing counter.</p>
 
-        <div className="w-full flex flex-col space-y-2">
+        {/* Counter ID Input */}
+        <div className="w-full">
+          <input
+            type="text"
+            placeholder="Enter Counter ID"
+            className="input input-bordered w-full"
+            value={counterId}
+            onChange={(e) => setCounterId(e.target.value)}
+          />
+        </div>
+
+        {/* Counter Value Display */}
+        {counterView && !isLoadingCounterView && (
+          <div className="text-2xl font-bold bg-base-200 px-6 py-3 rounded-xl w-full text-center">
+            Value: {counterView}
+          </div>
+        )}
+
+        {/* Control Buttons */}
+        <div className="grid grid-cols-2 gap-4 w-full">
+          <button
+            className="btn btn-secondary"
+            disabled={!account || !counterId}
+            onClick={() => refetchCounterView()}
+          >
+            View Counter
+          </button>
+          <button
+            className="btn btn-secondary"
+            disabled={!account || !counterId}
+            onClick={incrementCounter}
+          >
+            Increment
+          </button>
+        </div>
+
+        {/* Set Value Controls */}
+        <div className="w-full space-y-2">
           <input
             type="number"
             placeholder="Enter new value"
@@ -127,62 +175,23 @@ const CounterPage: NextPage = () => {
             value={newValue}
             onChange={(e) => setNewValue(e.target.value)}
           />
-          <button className="btn btn-secondary mt-2" disabled={!account} onClick={handleSetValue}>
-            Set Value (Owner Only)
+          <button
+            className="btn btn-secondary w-full"
+            disabled={!account || !counterId || !newValue}
+            onClick={handleSetValue}
+          >
+            Set Value
           </button>
         </div>
 
-        <button className="btn btn-warning mt-2" disabled={!account} onClick={deleteCounter}>
-          Delete Counter (Owner Only)
+        {/* Delete Button */}
+        <button
+          className="btn btn-warning w-full"
+          disabled={!account || !counterId}
+          onClick={deleteCounter}
+        >
+          Delete Counter
         </button>
-      </div>
-
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
-        <h2 className="text-lg font-semibold">Counter Value</h2>
-        <p className="text-sm">
-          Current value from the blockchain using{" "}
-          <Link
-            className="underline"
-            href="https://scaffold-move-docs.vercel.app/hooks/usegetaccountresource"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            useGetAccountResource
-          </Link>
-        </p>
-        <button className="btn btn-secondary mt-2" disabled={!account} onClick={() => refetchCounter()}>
-          Refresh Counter Value
-        </button>
-
-        {counterResource && !transactionInProcess && (
-          <div className="text-2xl font-bold">
-            Value: {counterResource.value}
-          </div>
-        )}
-      </div>
-
-      <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
-        <h2 className="text-lg font-semibold">View Counter</h2>
-        <p className="text-sm">
-          Read counter value using the view function with{" "}
-          <Link
-            className="underline"
-            href="https://scaffold-move-docs.vercel.app/hooks/useview"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            useView
-          </Link>
-        </p>
-        <button className="btn btn-secondary mt-2" disabled={!account} onClick={() => refetchCounterView()}>
-          View Counter
-        </button>
-
-        {counterView && !isLoadingCounterView && (
-          <div className="text-2xl font-bold">
-            Value: {counterView}
-          </div>
-        )}
       </div>
     </div>
   );

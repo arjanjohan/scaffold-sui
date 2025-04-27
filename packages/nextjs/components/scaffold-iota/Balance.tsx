@@ -1,5 +1,5 @@
 import { getFormattedBalanceStr } from "../../utils/scaffold-move/ContentValue/CurrencyValue";
-import { useGetAccountNativeBalance } from "~~/hooks/scaffold-move";
+import { useGetAccountNativeBalance } from "~~/hooks/scaffold-iota";
 
 type BalanceProps = {
   address: string;

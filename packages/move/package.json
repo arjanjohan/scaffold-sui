@@ -1,5 +1,5 @@
 {
-  "name": "@scaffold-move/move",
+  "name": "@scaffold-iota/move",
   "packageManager": "yarn@3.2.3",
   "scripts": {
     "client": "iota client new-env",

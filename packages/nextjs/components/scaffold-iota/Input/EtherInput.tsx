@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { CommonInputProps, InputBase, SIGNED_NUMBER_REGEX } from "~~/components/scaffold-move";
+import { CommonInputProps, InputBase, SIGNED_NUMBER_REGEX } from ".";
 
 /**
  * Input for ETH amount with USD conversion.

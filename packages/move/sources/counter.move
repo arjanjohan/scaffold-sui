@@ -19,12 +19,13 @@ module deployment_addr::counter {
         counter.owner
     }
 
+    #[view]
     public fun value(counter: &Counter): u64 {
         counter.value
     }
 
     /// Create and share a Counter object.
-    public fun create(ctx: &mut TxContext) {
+    public entry fun create(ctx: &mut TxContext) {
         transfer::share_object(Counter {
             id: object::new(ctx),
             owner: tx_context::sender(ctx),
@@ -33,23 +34,23 @@ module deployment_addr::counter {
     }
 
     /// Increment a counter by 1.
-    public fun increment(counter: &mut Counter) {
+    public entry fun increment(counter: &mut Counter) {
         counter.value = counter.value + 1;
     }
 
     /// Set value (only runnable by the Counter owner)
-    public fun set_value(counter: &mut Counter, value: u64, ctx: &TxContext) {
+    public entry fun set_value(counter: &mut Counter, value: u64, ctx: &TxContext) {
         assert!(counter.owner == ctx.sender(), 0);
         counter.value = value;
     }
 
     /// Assert a value for the counter.
-    public fun assert_value(counter: &Counter, value: u64) {
+    public entry fun assert_value(counter: &Counter, value: u64) {
         assert!(counter.value == value, 0)
     }
 
     /// Delete counter (only runnable by the Counter owner)
-    public fun delete(counter: Counter, ctx: &TxContext) {
+    public entry fun delete(counter: Counter, ctx: &TxContext) {
         assert!(counter.owner == ctx.sender(), 0);
         let Counter {id, owner:_, value:_} = counter;
         id.delete();
