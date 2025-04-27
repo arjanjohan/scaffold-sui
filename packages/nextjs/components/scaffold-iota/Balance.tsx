@@ -5,10 +5,11 @@ import { useGetCoinBalance } from "~~/hooks/scaffold-iota";
 type BalanceProps = {
   address: string;
   decimals?: number;
+  coinType?: string;
 };
 
-export const Balance = ({ address, decimals = 10 }: BalanceProps) => {
-  const { balance, isLoading, isError } = useGetCoinBalance(IOTA_TYPE_ARG, address);
+export const Balance = ({ address, decimals = 10, coinType = IOTA_TYPE_ARG }: BalanceProps) => {
+  const { balance, isLoading, isError } = useGetCoinBalance(coinType, address);
 
   if (isLoading) {
     return (
