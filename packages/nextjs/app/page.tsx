@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useCurrentAccount } from "@iota/dapp-kit";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-iota";
-import { useCurrentAccount } from "@iota/dapp-kit";
 
 const Home: NextPage = () => {
   const account = useCurrentAccount();

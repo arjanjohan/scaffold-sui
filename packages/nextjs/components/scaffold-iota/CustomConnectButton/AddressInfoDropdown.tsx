@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { getNetwork } from "@iota/iota-sdk/client";
+import { getFaucetHost, requestIotaFromFaucetV0 } from '@iota/iota-sdk/faucet';
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
-  ArrowsRightLeftIcon,
   BanknotesIcon,
   CheckCircleIcon,
   ChevronDownIcon,
@@ -14,9 +14,7 @@ import {
 import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
 import { notification } from "~~/utils/scaffold-move/notification";
-
-import { getNetwork } from "@iota/iota-sdk/client";
-import { getFaucetHost, requestIotaFromFaucetV0 } from '@iota/iota-sdk/faucet';
+import { useDisconnectWallet } from "@iota/dapp-kit";
 
 type AddressInfoDropdownProps = {
   address: string;
@@ -34,18 +32,16 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   };
   useOutsideClick(dropdownRef, closeDropdown);
 
-  const { disconnect, wallet } = useWallet();
-  const networkConfig = getNetwork("testnet");
+  const { mutate: disconnect } = useDisconnectWallet();
 
-  // Check if connected wallet is Petra or Pontem
-  const isNetworkSwitchingDisabled = wallet?.name === "Petra" || wallet?.name === "Pontem";
+  const networkConfig = getNetwork("testnet");
 
   const handleFaucetRequest = async () => {
     const notificationId = notification.loading("Requesting tokens from faucet...");
     try {
       setIsFaucetLoading(true);
       await requestIotaFromFaucetV0({
-        host: getFaucetHost('devnet'),
+        host: getFaucetHost("testnet"),
         recipient: address,
       });
       notification.remove(notificationId);

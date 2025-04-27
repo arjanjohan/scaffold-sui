@@ -5,9 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
-import { useOutsideClick } from "~~/hooks/scaffold-iota";
 import { CustomConnectButton } from "~~/components/scaffold-iota";
-
+import { useOutsideClick } from "~~/hooks/scaffold-iota";
 
 type HeaderMenuLink = {
   label: string;

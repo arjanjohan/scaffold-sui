@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { getNetwork } from "@iota/iota-sdk/client";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
-import { getNetwork } from "@iota/iota-sdk/client";
 
 type AddressProps = {
   address?: string;
