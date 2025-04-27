@@ -5,5 +5,7 @@ export * from "./useGetObjectOrPastObject";
 export * from "./useGetAllBalances";
 export * from "./useFormatCoin";
 export * from "./useOutsideClick";
-export * from "./useGetAccountNativeBalance";
 export * from "./useSubmitTransaction";
+export * from './useGetAllCoins';
+export * from './useGetCoinBalance';
+export * from './useGetCoins';
