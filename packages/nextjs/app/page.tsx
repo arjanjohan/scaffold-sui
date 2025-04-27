@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCurrentAccount } from "@iota/dapp-kit";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-iota";
 
 const Home: NextPage = () => {
@@ -41,14 +41,24 @@ const Home: NextPage = () => {
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+          <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BugAntIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Tinker with your Move modules using the{" "}
+                Tinker with your smart contracts using the{" "}
                 <Link href="/debug" passHref className="link">
                   Debug Modules
                 </Link>{" "}
                 tab.
+              </p>
+            </div>
+            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+              <BookOpenIcon className="h-8 w-8 fill-secondary" />
+              <p>
+                Learn about all Scaffold IOTA features and how to use them on the{" "}
+                <Link href="/docs" passHref className="link">
+                  Documentation
+                </Link>{" "}
+                page.
               </p>
             </div>
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">

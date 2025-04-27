@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BugAntIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { CustomConnectButton } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
 
@@ -24,6 +24,11 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/counter",
   },
   {
+    label: "Docs",
+    href: "https://scaffold-iota-docs.vercel.app",
+    icon: <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+  },
+  {
     label: "Debug Modules",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
@@ -37,11 +42,14 @@ export const HeaderMenuLinks = () => {
     <>
       {menuLinks.map(({ label, href, icon }) => {
         const isActive = pathname === href;
+        const isExternal = href.startsWith("http");
         return (
           <li key={href}>
             <Link
               href={href}
               passHref
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
               className={`${
                 isActive ? "bg-secondary shadow-md" : ""
               } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}

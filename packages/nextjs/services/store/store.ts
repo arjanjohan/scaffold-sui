@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import scaffoldConfig from "~~/scaffold.config";
-import { Chain } from "~~/utils/scaffold-move/chains";
+import { Chain } from "~~/utils/scaffold-iota/chains";
 
 /**
  * Zustand Store
@@ -16,7 +16,7 @@ type GlobalState = {
   setTargetNetwork: (newTargetNetwork: Chain) => void;
 };
 
-export const useGlobalState = create<GlobalState>(set => ({
+export const useGlobalState = create<GlobalState>((set) => ({
   targetNetwork: scaffoldConfig.targetNetworks[0],
   setTargetNetwork: (newTargetNetwork: Chain) => set(() => ({ targetNetwork: newTargetNetwork })),
 }));

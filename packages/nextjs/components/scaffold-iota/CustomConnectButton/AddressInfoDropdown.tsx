@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { getNetwork } from "@iota/iota-sdk/client";
 import { getFaucetHost, requestIotaFromFaucetV0 } from '@iota/iota-sdk/faucet';
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
+  ArrowsRightLeftIcon,
   BanknotesIcon,
   CheckCircleIcon,
   ChevronDownIcon,
@@ -15,6 +15,8 @@ import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
 import { notification } from "~~/utils/scaffold-move/notification";
 import { useDisconnectWallet } from "@iota/dapp-kit";
+import { useGlobalState } from "~~/services/store/store";
+import scaffoldConfig from "~~/scaffold.config";
 
 type AddressInfoDropdownProps = {
   address: string;
@@ -33,15 +35,14 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   useOutsideClick(dropdownRef, closeDropdown);
 
   const { mutate: disconnect } = useDisconnectWallet();
-
-  const networkConfig = getNetwork("testnet");
+  const { targetNetwork, setTargetNetwork } = useGlobalState();
 
   const handleFaucetRequest = async () => {
     const notificationId = notification.loading("Requesting tokens from faucet...");
     try {
       setIsFaucetLoading(true);
       await requestIotaFromFaucetV0({
-        host: getFaucetHost("testnet"),
+        host: getFaucetHost(targetNetwork.id),
         recipient: address,
       });
       notification.remove(notificationId);
@@ -115,25 +116,36 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
               </a>
             </button>
           </li>
-          {/* {allowedNetworks.length > 1 ? (
-            <li className={selectingNetwork ? "hidden" : ""}>
-              <button
-                className={`btn-sm !rounded-xl flex gap-3 py-3 ${
-                  isNetworkSwitchingDisabled ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                type="button"
-                onClick={() => {
-                  if (!isNetworkSwitchingDisabled) {
-                    setSelectingNetwork(true);
-                  }
-                }}
-                disabled={isNetworkSwitchingDisabled} // Disable the button if Petra or Pontem is connected
-              >
-                <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
-              </button>
-            </li>
-          ) : null} */}
-          <li className={selectingNetwork || !networkConfig.faucet ? "hidden" : ""}>
+          <li className={selectingNetwork ? "hidden" : ""}>
+            <button
+              className="btn-sm !rounded-xl flex gap-3 py-3"
+              type="button"
+              onClick={() => setSelectingNetwork(true)}
+            >
+              <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
+            </button>
+          </li>
+          <li className={!selectingNetwork ? "hidden" : "menu-title pt-2"}>
+            <span className="text-sm font-normal">Select Network</span>
+          </li>
+          {selectingNetwork &&
+            scaffoldConfig.targetNetworks.map(network => (
+              <li key={network.id} className="!p-0">
+                <button
+                  className={`btn-sm !rounded-xl flex gap-3 py-3 ${
+                    targetNetwork.id === network.id ? "bg-secondary" : ""
+                  }`}
+                  type="button"
+                  onClick={() => {
+                    setTargetNetwork(network);
+                    setSelectingNetwork(false);
+                  }}
+                >
+                  <span className="whitespace-nowrap capitalize">{network.name}</span>
+                </button>
+              </li>
+            ))}
+          <li className={selectingNetwork || !targetNetwork.faucet ? "hidden" : ""}>
             <button
               className="btn-sm !rounded-xl flex gap-3 py-3"
               type="button"

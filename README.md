@@ -80,20 +80,17 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 
 **What's next**:
 
-- Edit your Move module `counter.move` in `packages/move/sources`
+- Edit your smart contract `counter.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit your Move tests in: `packages/move/test`. To run test use `yarn test`
 
 ## TODO
 
 - load deployed modules in frontend
-- Add submit tx hook
 - Add view tx hook
 - typesafety for hooks
 - debug tab
-- show balances
-- disconnect wallet doesnt work
-- set network config globally instead of `  const networkConfig = getNetwork("testnet");` troughout the app
+- fix/complete network switching
 
 ## Next steps
 
