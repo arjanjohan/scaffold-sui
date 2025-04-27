@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![logo](/assets/logo_small.png)
+![logo](/assets/logo.png)
 <h4 align="center">
   <a href="TODO">Documentation</a> |
   <a href="TODO">Website</a>
@@ -21,7 +21,7 @@
 
 Perfect for hackathons, prototyping, or launching your next Move project!
 
-![Debug Modules tab](assets/debug.png)
+![Debug Modules tab](assets/landing-page.png)
 
 ## Requirements
 
@@ -93,6 +93,7 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 - debug tab
 - show balances
 - disconnect wallet doesnt work
+- set network config globally instead of `  const networkConfig = getNetwork("testnet");` troughout the app
 
 ## Next steps
 
