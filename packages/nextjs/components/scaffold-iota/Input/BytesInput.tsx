@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { bytesToString, isHex, toBytes, toHex } from "viem";
 import { CommonInputProps, InputBase } from ".";
+import { bytesToString, isHex, toBytes, toHex } from "viem";
 
 export const BytesInput = ({ value, onChange, name, placeholder, disabled }: CommonInputProps) => {
   const convertStringToBytes = useCallback(() => {
