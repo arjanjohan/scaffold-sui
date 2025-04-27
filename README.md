@@ -84,13 +84,15 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit your Move tests in: `packages/move/test`. To run test use `yarn test`
 
-## TODO:
+## TODO
 
+- load deployed modules in frontend
 - Add submit tx hook
 - Add view tx hook
 - typesafety for hooks
 - debug tab
 - show balances
+- disconnect wallet doesnt work
 
 ## Next steps
 
@@ -121,6 +123,7 @@ In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion
 
 None of this would have been possible without the great work done in:
 - [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2)
+- [IOTA Core repo](https://github.com/iotaledger/iota)
 - [IOTA dApp Kit](https://docs.iota.org/ts-sdk/dapp-kit/)
 - [IOTA TypeScript SDK](https://docs.iota.org/ts-sdk/typescript/)
 

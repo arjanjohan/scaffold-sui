@@ -21,8 +21,8 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/",
   },
   {
-    label: "Bio",
-    href: "/bio",
+    label: "Counter",
+    href: "/counter",
   },
   {
     label: "Debug Modules",

@@ -4,33 +4,10 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-iota";
-import { useWallets, useAccounts } from "@iota/dapp-kit";
-import {
-  useCurrentAccount,
-  useSignAndExecuteTransaction,
-  useIotaClient,
-  useIotaClientQuery,
-} from "@iota/dapp-kit";
-import { useGetObjectOrPastObject } from '~~/hooks/scaffold-iota';
-import { translate, type DataType } from '~~/types/scaffold-iota/ObjectResultType';
+import { useCurrentAccount } from "@iota/dapp-kit";
 
 const Home: NextPage = () => {
-  const wallets = useWallets();
-  const accounts = useAccounts();
-  const currentAccount = useCurrentAccount();
-  const iotaClient = useIotaClient();
-  console.log(accounts);
-  console.log(wallets);
-  console.log(currentAccount);
-  console.log(iotaClient);
-
-  let objID = "0x70376d13660b0d6d6007c5413e5b9b5c55d2b40547b211085f36cf629ce4bbf2";
-  const { data, isPending, isError, isFetched } = useGetObjectOrPastObject(objID);
-  if (data) {
-    let object = translate(data);
-    console.log(object);
-  }
-
+  const account = useCurrentAccount();
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -42,7 +19,7 @@ const Home: NextPage = () => {
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
 
-            <Address address={accounts[0]?.address?.toString()} />
+            <Address address={account?.address} />
           </div>
           <p className="text-center text-lg">
             Get started by editing{" "}
@@ -53,17 +30,13 @@ const Home: NextPage = () => {
           <p className="text-center text-lg">
             Edit your Move module{" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              OnchainBio.move
+              counter.move
             </code>{" "}
             in{" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
               packages/move/sources
             </code>
           </p>
-        </div>
-
-        <div>
-        {}
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">

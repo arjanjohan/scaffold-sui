@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import type { NextPage } from "next";
 import { useCurrentAccount } from "@iota/dapp-kit";
+import { NextPage } from "next";
 import { Address } from "~~/components/scaffold-iota";
-import useSubmitTransaction from "~~/hooks/scaffold-iota/useSubmitTransaction";
 import { useGetObject } from "~~/hooks/scaffold-iota/useGetObject";
+import useSubmitTransaction from "~~/hooks/scaffold-iota/useSubmitTransaction";
 
 const CounterPage: NextPage = () => {
   const moduleName = "counter";
@@ -16,7 +16,7 @@ const CounterPage: NextPage = () => {
   const [manualObjectId, setManualObjectId] = useState<string>("");
 
   const { submitTransaction } = useSubmitTransaction(moduleName, moduleAddress);
-  const { data: counterObject, isPending, error, refetch: refetchCounter } = useGetObject(manualObjectId);
+  const { data: counterObject, refetch: refetchCounter } = useGetObject(manualObjectId);
 
   // Extract counter data
   const counterData = counterObject?.data?.content as { fields?: { value: number; owner: string } };
@@ -98,11 +98,7 @@ const CounterPage: NextPage = () => {
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">Create New Counter</h2>
         <p className="text-sm">Create a new shared counter on the IOTA blockchain.</p>
-        <button
-          className="btn btn-primary w-full max-w-xs"
-          disabled={!account}
-          onClick={createCounter}
-        >
+        <button className="btn btn-primary w-full max-w-xs" disabled={!account} onClick={createCounter}>
           Create Counter
         </button>
       </div>
@@ -117,22 +113,14 @@ const CounterPage: NextPage = () => {
           placeholder="Enter counter object ID"
           className="input input-bordered w-full"
           value={manualObjectId}
-          onChange={(e) => setManualObjectId(e.target.value)}
+          onChange={e => setManualObjectId(e.target.value)}
         />
 
         <div className="grid grid-cols-2 gap-4 w-full">
-          <button
-            className="btn btn-secondary"
-            disabled={!account || !manualObjectId}
-            onClick={() => refetchCounter()}
-          >
+          <button className="btn btn-secondary" disabled={!account || !manualObjectId} onClick={() => refetchCounter()}>
             Refresh
           </button>
-          <button
-            className="btn btn-secondary"
-            disabled={!account || !manualObjectId}
-            onClick={incrementCounter}
-          >
+          <button className="btn btn-secondary" disabled={!account || !manualObjectId} onClick={incrementCounter}>
             Increment
           </button>
         </div>
@@ -143,11 +131,13 @@ const CounterPage: NextPage = () => {
             placeholder="Enter new value"
             className="input input-bordered w-full"
             value={newValue}
-            onChange={(e) => setNewValue(e.target.value)}
+            onChange={e => setNewValue(e.target.value)}
           />
           <button
             className="btn btn-secondary w-full"
-            disabled={!account || !manualObjectId || !newValue || Boolean(counterOwner && counterOwner !== account?.address)}
+            disabled={
+              !account || !manualObjectId || !newValue || Boolean(counterOwner && counterOwner !== account?.address)
+            }
             onClick={handleSetValue}
           >
             Set Value
@@ -165,7 +155,9 @@ const CounterPage: NextPage = () => {
         {counterValue !== undefined && (
           <div className="mt-4 text-center">
             <p className="text-lg">Current Value: {counterValue}</p>
-            <p className="text-sm">Owner: <Address address={counterOwner || ''} /></p>
+            <p className="text-sm">
+              Owner: <Address address={counterOwner || ""} />
+            </p>
           </div>
         )}
       </div>
