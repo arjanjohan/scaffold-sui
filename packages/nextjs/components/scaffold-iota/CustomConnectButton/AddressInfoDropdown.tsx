@@ -13,8 +13,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
+import { notification } from "~~/utils/scaffold-move/notification";
 
 import { getNetwork } from "@iota/iota-sdk/client";
+import { getFaucetHost, requestIotaFromFaucetV0 } from '@iota/iota-sdk/faucet';
 
 type AddressInfoDropdownProps = {
   address: string;
@@ -24,6 +26,7 @@ type AddressInfoDropdownProps = {
 export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: AddressInfoDropdownProps) => {
   const [addressCopied, setAddressCopied] = useState(false);
   const [selectingNetwork, setSelectingNetwork] = useState(false);
+  const [isFaucetLoading, setIsFaucetLoading] = useState(false);
   const dropdownRef = useRef<HTMLDetailsElement>(null);
   const closeDropdown = () => {
     setSelectingNetwork(false);
@@ -36,6 +39,25 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
 
   // Check if connected wallet is Petra or Pontem
   const isNetworkSwitchingDisabled = wallet?.name === "Petra" || wallet?.name === "Pontem";
+
+  const handleFaucetRequest = async () => {
+    const notificationId = notification.loading("Requesting tokens from faucet...");
+    try {
+      setIsFaucetLoading(true);
+      await requestIotaFromFaucetV0({
+        host: getFaucetHost('devnet'),
+        recipient: address,
+      });
+      notification.remove(notificationId);
+      notification.success("Successfully requested tokens from faucet!");
+    } catch (error) {
+      console.error('Faucet request failed:', error);
+      notification.remove(notificationId);
+      notification.error("Failed to request tokens from faucet. Please try again.");
+    } finally {
+      setIsFaucetLoading(false);
+    }
+  };
 
   return (
     <>
@@ -116,16 +138,16 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
             </li>
           ) : null} */}
           <li className={selectingNetwork || !networkConfig.faucet ? "hidden" : ""}>
-            <button className="btn-sm !rounded-xl flex gap-3 py-3" type="button">
+            <button
+              className="btn-sm !rounded-xl flex gap-3 py-3"
+              type="button"
+              onClick={handleFaucetRequest}
+              disabled={isFaucetLoading}
+            >
               <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
-              <a
-                target="_blank"
-                href={networkConfig.faucet}
-                rel="noopener noreferrer"
-                className="whitespace-nowrap"
-              >
-                Faucet
-              </a>
+              <span className="whitespace-nowrap">
+                {isFaucetLoading ? 'Requesting...' : 'Request Tokens'}
+              </span>
             </button>
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
