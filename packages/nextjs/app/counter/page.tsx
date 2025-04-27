@@ -1,20 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import type { NextPage } from "next";
-import {
-  useCurrentAccount,
-  useSignAndExecuteTransaction,
-  useIotaClient,
-  useIotaClientQuery,
-} from "@iota/dapp-kit";
+import { useCurrentAccount } from "@iota/dapp-kit";
 import { Address } from "~~/components/scaffold-iota";
 import useSubmitTransaction from "~~/hooks/scaffold-iota/useSubmitTransaction";
-import { useView } from "~~/hooks/scaffold-iota/useView";
-import { AddressInput } from "~~/types/scaffold-iota";
-import { createMoveCallTransaction } from "~~/utils/scaffold-move/transaction";
-import { Transaction } from "@iota/iota-sdk/transactions";
+import { useGetObject } from "~~/hooks/scaffold-iota/useGetObject";
 
 // Alert Component for showing error messages or warnings
 const Alert = ({ message }: { message: string }) => (
@@ -29,29 +20,25 @@ const CounterPage: NextPage = () => {
 
   const account = useCurrentAccount();
   const [newValue, setNewValue] = useState<string>("");
-  const [counterValue, setCounterValue] = useState<number | null>(null);
-  const [counterId, setCounterId] = useState<string>("0x8b96708c3323b735113190e96ff9d42ff79bc9d6ea17f4f4b6ff202cee0624a6");
+  const [counterId, setCounterId] = useState<string>("0x9a70a1ca0da10885a788062aeeb367f746d84c93f10d35ba36a87d9bf267c068");
 
-  const { submitTransaction, transactionResponse, transactionInProcess } = useSubmitTransaction(moduleName, moduleAddress);
+  const { submitTransaction } = useSubmitTransaction(moduleName, moduleAddress);
+  const { data: counterObject, isPending, error, refetch: refetchCounter } = useGetObject(counterId);
 
-  const {
-    data: counterView,
-    isLoading: isLoadingCounterView,
-    refetch: refetchCounterView,
-  } = useView({
-    moduleName: "counter",
-    functionName: "value",
-    args: [account?.address?.toString() as AddressInput],
-  });
+  // Helper function to handle transaction success
+  const handleTransactionSuccess = async () => {
+    // Wait a bit for the transaction to be processed
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await refetchCounter();
+  };
 
   // Create a new counter
   const createCounter = async () => {
     try {
       const result = await submitTransaction("create", []);
-      // Get the created counter ID from the transaction result
-      if (result && 'transactionSubmitted' in result && result.transactionSubmitted && result.success) {
+      if (result.transactionSubmitted && result.success) {
         // TODO: Extract counter ID from transaction result
-        await refetchCounterView();
+        await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error creating counter:", error);
@@ -60,12 +47,11 @@ const CounterPage: NextPage = () => {
 
   // Increment the counter
   const incrementCounter = async () => {
-    console.log("incrementCounter: ", counterId);
     if (!counterId) return;
     try {
       const result = await submitTransaction("increment", [counterId]);
       if (result.transactionSubmitted && result.success) {
-        await refetchCounterView();
+        await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error incrementing counter:", error);
@@ -78,8 +64,8 @@ const CounterPage: NextPage = () => {
     try {
       const result = await submitTransaction("set_value", [counterId, parseInt(newValue)]);
       if (result.transactionSubmitted && result.success) {
-        await refetchCounterView();
         setNewValue("");
+        await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error setting counter value:", error);
@@ -92,13 +78,18 @@ const CounterPage: NextPage = () => {
     try {
       const result = await submitTransaction("delete", [counterId]);
       if (result.transactionSubmitted && result.success) {
-        await refetchCounterView();
         setCounterId("");
+        await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error deleting counter:", error);
     }
   };
+
+  // Extract counter value from the object data
+  const counterData = counterObject?.data?.content as { fields?: { value: number; owner: string } };
+  const counterValue = counterData?.fields?.value;
+  const counterOwner = counterData?.fields?.owner;
 
   return (
     <div className="flex items-center flex-col flex-grow">
@@ -142,18 +133,33 @@ const CounterPage: NextPage = () => {
         </div>
 
         {/* Counter Value Display */}
-        {counterView && !isLoadingCounterView && (
-          <div className="text-2xl font-bold bg-base-200 px-6 py-3 rounded-xl w-full text-center">
-            Value: {counterView}
+        {isPending ? (
+          <div className="text-2xl font-bold bg-base-200 px-6 py-3 rounded-xl w-full text-center animate-pulse">
+            Loading...
           </div>
-        )}
+        ) : error ? (
+          <div className="text-error text-center w-full">
+            Error loading counter: {error.message}
+          </div>
+        ) : counterValue !== undefined ? (
+          <div className="space-y-2 bg-base-200 px-6 py-3 rounded-xl w-full">
+            <div className="text-2xl font-bold text-center">
+              Value: {counterValue}
+            </div>
+            {counterOwner && (
+              <div className="text-sm text-center">
+                Owner: <Address address={counterOwner} />
+              </div>
+            )}
+          </div>
+        ) : null}
 
         {/* Control Buttons */}
         <div className="grid grid-cols-2 gap-4 w-full">
           <button
             className="btn btn-secondary"
             disabled={!account || !counterId}
-            onClick={() => refetchCounterView()}
+            onClick={() => refetchCounter()}
           >
             View Counter
           </button>
@@ -177,7 +183,7 @@ const CounterPage: NextPage = () => {
           />
           <button
             className="btn btn-secondary w-full"
-            disabled={!account || !counterId || !newValue}
+            disabled={!account || !counterId || !newValue || Boolean(counterOwner && counterOwner !== account?.address)}
             onClick={handleSetValue}
           >
             Set Value
@@ -187,7 +193,7 @@ const CounterPage: NextPage = () => {
         {/* Delete Button */}
         <button
           className="btn btn-warning w-full"
-          disabled={!account || !counterId}
+          disabled={!account || !counterId || Boolean(counterOwner && counterOwner !== account?.address)}
           onClick={deleteCounter}
         >
           Delete Counter
