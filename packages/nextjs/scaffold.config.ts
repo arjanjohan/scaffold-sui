@@ -4,7 +4,6 @@ export type ScaffoldConfig = {
   targetNetworks: readonly Chain[];
   pollingInterval: number;
   onlyLocalBurnerWallet: boolean;
-  allowAptosConnect: boolean;
 };
 
 const scaffoldConfig = {
@@ -15,11 +14,9 @@ const scaffoldConfig = {
   // it has no effect if you only target the local network (default is 4000)
   pollingInterval: 30000,
 
-  // Only show the Burner Wallet when running on hardhat network
+  // Only show the Burner Wallet when running on local network
   onlyLocalBurnerWallet: true,
 
-  // Allow Aptos Connect on the target networks
-  allowAptosConnect: false,
 } as const satisfies ScaffoldConfig;
 
 export default scaffoldConfig;
