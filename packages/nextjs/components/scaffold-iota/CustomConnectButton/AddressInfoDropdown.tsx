@@ -13,7 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
-import { notification } from "~~/utils/scaffold-move/notification";
+import { notification } from "~~/utils/scaffold-iota/notification";
 import { useDisconnectWallet } from "@iota/dapp-kit";
 import { useGlobalState } from "~~/services/store/store";
 import scaffoldConfig from "~~/scaffold.config";

@@ -7,3 +7,4 @@ export * from './getExplorerLink';
 export * from './formatAmount';
 export * from './filterAndSortTokenBalances';
 export * from './networks';
+export * from './notification';
