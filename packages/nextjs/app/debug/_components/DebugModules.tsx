@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
 import { ModuleUI } from "~~/app/debug/_components/module";
-import { useTargetNetwork } from "~~/hooks/scaffold-move/useTargetNetwork";
+import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
 import { GenericModule, ModuleName } from "~~/utils/scaffold-move/module";
 import { getAllModules } from "~~/utils/scaffold-move/modulesData";
 
