@@ -5,9 +5,14 @@ import { useCurrentAccount } from "@iota/dapp-kit";
 import type { NextPage } from "next";
 import { BookOpenIcon, BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-iota";
+import { getObjectUrl } from "~~/utils/scaffold-iota/getExplorerPaths";
+import { modules } from "~~/utils/scaffold-iota/module";
 
 const Home: NextPage = () => {
   const account = useCurrentAccount();
+  const network = "testnet"; // TODO: fetch actual network from config
+  const networkModules = modules[network];
+
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -18,7 +23,6 @@ const Home: NextPage = () => {
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
-
             <Address address={account?.address} />
           </div>
           <p className="text-center text-lg">
@@ -68,6 +72,35 @@ const Home: NextPage = () => {
                 Block Explorer {/* </Link>{" "} */}
                 tab. <b>Coming soon...</b>
               </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full px-8 py-12">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold">Your Deployed Modules ({network})</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {networkModules ? (
+                Object.entries(networkModules).map(([moduleName, module]) => (
+                  <Link
+                    key={moduleName}
+                    href={getObjectUrl(module.address, network, undefined, moduleName)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <div className="bg-base-100 p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+                      <h3 className="text-lg font-semibold mb-2">{moduleName}</h3>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-500">Address:</span>
+                        <Address address={module.address} disableAddressLink={true} />
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="text-center">No modules deployed on {network}</div>
+              )}
             </div>
           </div>
         </div>

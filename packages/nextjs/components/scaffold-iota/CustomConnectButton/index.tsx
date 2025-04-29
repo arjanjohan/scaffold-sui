@@ -5,13 +5,17 @@ import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { ConnectButton, useCurrentAccount } from "@iota/dapp-kit";
 import { Balance } from "~~/components/scaffold-iota";
 import { useGlobalState } from "~~/services/store/store";
+import { getAddressUrl } from "~~/utils/scaffold-iota/getExplorerPaths";
 
 export const CustomConnectButton = () => {
   const { targetNetwork } = useGlobalState();
   const account = useCurrentAccount();
   const connected = account !== null;
 
-  const blockExplorerAddressLink = account ? `${targetNetwork.url}/explorer/addr/${account.address}` : undefined;
+  let blockExplorerAddressLink = undefined;
+  if (account) {
+    blockExplorerAddressLink = getAddressUrl(account.address, targetNetwork.id);
+  }
 
   return (
     <>
