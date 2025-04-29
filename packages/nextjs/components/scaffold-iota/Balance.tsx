@@ -1,6 +1,6 @@
-import { getFormattedBalanceStr } from "../../utils/scaffold-iota/ContentValue/CurrencyValue";
-import { useGetCoinBalance } from "~~/hooks/scaffold-iota";
+import { getFormattedBalanceStr } from "~~/utils/scaffold-iota/ContentValue/CurrencyValue";
 import { IOTA_TYPE_ARG } from "@iota/iota-sdk/utils";
+import { useGetCoinBalance } from "~~/hooks/scaffold-iota";
 
 type BalanceProps = {
   address: string;

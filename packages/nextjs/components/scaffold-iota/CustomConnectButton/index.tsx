@@ -3,8 +3,6 @@
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { ConnectButton, useCurrentAccount } from "@iota/dapp-kit";
-import { getNetwork } from "@iota/iota-sdk/client";
-import { getAddressUrl } from "~~/utils/scaffold-iota";
 import { Balance } from "~~/components/scaffold-iota";
 import { useGlobalState } from "~~/services/store/store";
 
@@ -25,10 +23,7 @@ export const CustomConnectButton = () => {
             <Balance address={account?.address || ""} />
             <span className="text-xs capitalize">{targetNetwork.name}</span>
           </div>
-          <AddressInfoDropdown
-            address={account?.address || ""}
-            blockExplorerAddressLink={blockExplorerAddressLink}
-          />
+          <AddressInfoDropdown address={account?.address || ""} blockExplorerAddressLink={blockExplorerAddressLink} />
           <AddressQRCodeModal address={account?.address?.toString() || ""} modalId="qrcode-modal" />
         </>
       )}

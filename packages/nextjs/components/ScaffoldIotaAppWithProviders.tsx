@@ -24,12 +24,7 @@ const ScaffoldIotaApp = ({ children }: { children: React.ReactNode }) => {
 
 // Config options for the networks you want to connect to
 const { networkConfig } = createNetworkConfig(
-  Object.fromEntries(
-    scaffoldConfig.targetNetworks.map(network => [
-      network.id,
-      { url: network.url }
-    ])
-  )
+  Object.fromEntries(scaffoldConfig.targetNetworks.map(network => [network.id, { url: network.url }])),
 );
 
 export const queryClient = new QueryClient({

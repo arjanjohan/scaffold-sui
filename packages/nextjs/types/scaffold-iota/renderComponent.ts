@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { PropsWithChildren, JSX } from 'react';
-import type { ExplorerLinkConfig } from '../utils/getExplorerLink';
+import type { ExplorerLinkConfig } from '~~/utils/scaffold-iota';
 
 export type RenderExplorerLinkProps = PropsWithChildren<ExplorerLinkConfig>;
 export type RenderExplorerLink = (props: RenderExplorerLinkProps) => JSX.Element;

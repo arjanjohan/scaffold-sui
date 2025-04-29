@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import { getFaucetHost, requestIotaFromFaucetV0 } from '@iota/iota-sdk/faucet';
+import { useDisconnectWallet } from "@iota/dapp-kit";
+import { getFaucetHost, requestIotaFromFaucetV0 } from "@iota/iota-sdk/faucet";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftEndOnRectangleIcon,
@@ -13,10 +14,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
-import { notification } from "~~/utils/scaffold-iota/notification";
-import { useDisconnectWallet } from "@iota/dapp-kit";
-import { useGlobalState } from "~~/services/store/store";
 import scaffoldConfig from "~~/scaffold.config";
+import { useGlobalState } from "~~/services/store/store";
+import { notification } from "~~/utils/scaffold-iota/notification";
 
 type AddressInfoDropdownProps = {
   address: string;
@@ -48,7 +48,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
       notification.remove(notificationId);
       notification.success("Successfully requested tokens from faucet!");
     } catch (error) {
-      console.error('Faucet request failed:', error);
+      console.error("Faucet request failed:", error);
       notification.remove(notificationId);
       notification.error("Failed to request tokens from faucet. Please try again.");
     } finally {
@@ -153,9 +153,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
               disabled={isFaucetLoading}
             >
               <BanknotesIcon className="h-6 w-4 ml-2 sm:ml-0" />
-              <span className="whitespace-nowrap">
-                {isFaucetLoading ? 'Requesting...' : 'Request Tokens'}
-              </span>
+              <span className="whitespace-nowrap">{isFaucetLoading ? "Requesting..." : "Request Tokens"}</span>
             </button>
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
