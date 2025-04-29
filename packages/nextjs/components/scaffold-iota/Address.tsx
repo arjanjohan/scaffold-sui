@@ -6,6 +6,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useGlobalState } from "~~/services/store/store";
+
 type AddressProps = {
   address?: string;
   disableAddressLink?: boolean;

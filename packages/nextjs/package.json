@@ -16,6 +16,7 @@
   "dependencies": {
     "@apollo/client": "^3.12.4",
     "@aptos-labs/wallet-adapter-react": "^4.1.2",
+    "@growthbook/growthbook-react": "^1.4.1",
     "@heroicons/react": "^2.1.5",
     "@iota/dapp-kit": "^0.4.1",
     "@iota/iota-sdk": "^0.6.0",

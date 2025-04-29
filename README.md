@@ -87,10 +87,16 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 ## TODO
 
 - load deployed modules in frontend
-- Add view tx hook
 - typesafety for hooks
-- debug tab
 - fix/complete network switching
+
+maybe:
+- debug tab
+- Add view tx hook
+
+After the hackathon I intend to create some PR's for IOTA repo's for issues that I encountered while building Scaffold IOTA:
+- Add view functions to IOTA explorer repo
+- Add fix for [this NextJS setup issue](https://discord.com/channels/1341659158071611445/1360255915110039612). I will propose to either mention these `.css` files in the developer docs or make a fix to wallet so they arent needed anymore.
 
 ## Next steps
 

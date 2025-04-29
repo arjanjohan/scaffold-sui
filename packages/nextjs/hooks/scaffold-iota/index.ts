@@ -9,3 +9,4 @@ export * from "./useSubmitTransaction";
 export * from './useGetAllCoins';
 export * from './useGetCoinBalance';
 export * from './useGetCoins';
+export * from './useCoinsReFetchingConfig';

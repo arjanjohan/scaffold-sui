@@ -6,8 +6,8 @@ import { Toaster } from "react-hot-toast";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import { ProgressBar } from "~~/components/scaffold-iota/ProgressBar";
-import { useGlobalState } from "~~/services/store/store";
 import scaffoldConfig from "~~/scaffold.config";
+import { useGlobalState } from "~~/services/store/store";
 
 const ScaffoldIotaApp = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -49,7 +49,7 @@ export const ScaffoldIotaAppWithProviders = ({ children }: { children: React.Rea
       <IotaClientProvider
         networks={networkConfig}
         network={targetNetwork.id}
-        onNetworkChange={(networkId) => {
+        onNetworkChange={networkId => {
           const newNetwork = scaffoldConfig.targetNetworks.find(n => n.id === networkId);
           if (newNetwork) setTargetNetwork(newNetwork);
         }}
