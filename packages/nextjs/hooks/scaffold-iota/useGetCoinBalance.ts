@@ -3,9 +3,12 @@
 import { useIotaClient } from '@iota/dapp-kit';
 import { useQuery } from '@tanstack/react-query';
 
+const MAX_COINS_PER_REQUEST = 10;
+
 export function useGetCoinBalance(
     coinType: string,
     address?: string | null,
+    maxCoinsPerRequest = MAX_COINS_PER_REQUEST,
 ) {
     const client = useIotaClient();
     const query = useQuery({
@@ -14,10 +17,10 @@ export function useGetCoinBalance(
             const result = await client.getCoins({
                 owner: address!,
                 coinType,
-                limit: 1, // We only need the first coin
+                limit: maxCoinsPerRequest,
             });
-            const firstCoin = result.data[0];
-            return firstCoin ? BigInt(firstCoin.balance) : BigInt(0);
+            // Sum up all coin balances
+            return result.data.reduce((total, coin) => total + BigInt(coin.balance), BigInt(0));
         },
         enabled: !!address,
     });
