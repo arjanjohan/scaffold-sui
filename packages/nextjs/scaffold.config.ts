@@ -1,4 +1,4 @@
-import { Chain, defaultChains } from "./utils/scaffold-iota/chains";
+import { Chain, defaultChains } from "~~/utils/scaffold-iota/chains";
 
 export type ScaffoldConfig = {
   targetNetworks: readonly Chain[];
@@ -16,7 +16,6 @@ const scaffoldConfig = {
 
   // Only show the Burner Wallet when running on local network
   onlyLocalBurnerWallet: true,
-
 } as const satisfies ScaffoldConfig;
 
 export default scaffoldConfig;

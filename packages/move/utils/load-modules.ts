@@ -3,6 +3,7 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 
 const deploymentsDir = path.join(__dirname, '../deployments');
+const frontendModulesDir = path.join(__dirname, '../../nextjs/modules');
 
 interface DeploymentOutput {
   createdObjects: string[];
@@ -18,14 +19,35 @@ interface IotaObjectResponse {
       [moduleName: string]: string;
     };
   };
-  // Add other fields as needed
 }
-
 
 interface NetworkModules {
   [moduleName: string]: string;  // moduleName -> address mapping
 }
 
+interface FunctionParameter {
+  name: string;
+  type: string;
+  isOption: boolean;
+}
+
+interface FunctionSignature {
+  name: string;
+  parameters: FunctionParameter[];
+  returnType?: string;
+}
+
+interface ModuleInfo {
+  address: string;
+  functions: FunctionSignature[];
+  content: string;
+}
+
+interface DeployedModules {
+  [networkId: string]: {
+    [moduleName: string]: ModuleInfo;
+  };
+}
 
 function getCurrentNetwork(): string {
   const envOutput = execSync('iota client envs --json', { encoding: 'utf-8' });
@@ -58,6 +80,164 @@ function storeModuleAddress(network: string, moduleName: string, address: string
   // Write back to file
   fs.writeFileSync(modulesFile, JSON.stringify(modules, null, 2), 'utf-8');
   console.log(`Stored module ${moduleName} with address ${address} in network ${network}`);
+}
+
+function extractFunctionSignatures(moduleContent: string): FunctionSignature[] {
+  const functions: FunctionSignature[] = [];
+  const functionRegex = /entry public (\w+)\((.*?)\)/g;
+  let match;
+
+  while ((match = functionRegex.exec(moduleContent)) !== null) {
+    const functionName = match[1];
+    const paramsStr = match[2];
+
+    const parameters: FunctionParameter[] = [];
+    if (paramsStr.trim()) {
+      const paramRegex = /Arg(\d+):\s*([^,)]+)/g;
+      let paramMatch;
+
+      while ((paramMatch = paramRegex.exec(paramsStr)) !== null) {
+        const paramType = paramMatch[2].trim();
+        parameters.push({
+          name: `arg${paramMatch[1]}`,
+          type: paramType,
+          isOption: paramType.includes('option::Option<')
+        });
+      }
+    }
+
+    functions.push({
+      name: functionName,
+      parameters
+    });
+  }
+
+  return functions;
+}
+
+function generateTypeScriptTypes(moduleName: string, functions: FunctionSignature[]): string {
+  let types = `// Generated types for ${moduleName}\n\n`;
+
+  // Generate function parameter types
+  for (const func of functions) {
+    const paramTypes = func.parameters.map(param => {
+      let tsType = param.type
+        .replace('&mut ', '')
+        .replace('&', '')
+        .replace('option::Option<', '')
+        .replace('>', '')
+        .replace('u8', 'number')
+        .replace('u64', 'bigint')
+        .replace('u128', 'bigint')
+        .replace('bool', 'boolean')
+        .replace('address', 'string')
+        .replace('vector<u8>', 'Uint8Array')
+        .replace('vector<T>', 'any[]');
+
+      if (param.isOption) {
+        tsType = `${tsType} | null`;
+      }
+
+      return `${param.name}: ${tsType}`;
+    }).join(', ');
+
+    types += `export interface ${func.name}Params {\n  ${paramTypes}\n}\n\n`;
+  }
+
+  return types;
+}
+
+function storeModuleContent(network: string, moduleName: string, address: string, content: string) {
+  const networkDir = path.join(frontendModulesDir, network);
+  if (!fs.existsSync(networkDir)) {
+    fs.mkdirSync(networkDir, { recursive: true });
+  }
+
+  const functions = extractFunctionSignatures(content);
+  const types = generateTypeScriptTypes(moduleName, functions);
+
+  // Store module content
+  const moduleContent: ModuleInfo = {
+    address,
+    functions,
+    content
+  };
+
+  // Write module content
+  fs.writeFileSync(
+    path.join(networkDir, `${moduleName}.json`),
+    JSON.stringify(moduleContent, null, 2),
+    'utf-8'
+  );
+
+  // Write TypeScript types
+  fs.writeFileSync(
+    path.join(networkDir, `${moduleName}.d.ts`),
+    types,
+    'utf-8'
+  );
+
+  console.log(`Stored module ${moduleName} content and types in network ${network}`);
+}
+
+function readExistingDeployedModules(): DeployedModules {
+  const filePath = path.join(frontendModulesDir, 'deployedModules.ts');
+  if (!fs.existsSync(filePath)) {
+    return {};
+  }
+
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    // Extract the object content between the curly braces
+    const match = content.match(/const deployedModules = ({[\s\S]*?}) as const;/);
+    if (!match) {
+      console.warn('Could not parse existing deployedModules.ts file');
+      return {};
+    }
+
+    // Convert the string to a proper object
+    // Note: This is a simple approach - in production you might want to use a proper parser
+    const modulesStr = match[1].replace(/\s+/g, ' ').trim();
+    return eval(`(${modulesStr})`) as DeployedModules;
+  } catch (error) {
+    console.warn('Failed to read existing deployedModules.ts:', error);
+    return {};
+  }
+}
+
+function generateDeployedModulesFile(existingModules: DeployedModules, currentNetwork: string, newModules: { [moduleName: string]: ModuleInfo }): string {
+  let content = '// This file is autogenerated - do not edit manually, your changes might be overwritten\n\n';
+  content += 'const deployedModules = {\n';
+
+  // Start with existing modules
+  const allModules = { ...existingModules };
+
+  // Update or add current network's modules
+  allModules[currentNetwork] = {
+    ...(allModules[currentNetwork] || {}),
+    ...newModules
+  };
+
+  // Generate content for each network
+  for (const [network, modules] of Object.entries(allModules)) {
+    content += `  ${network}: {\n`;
+
+    // Add each module in the network
+    for (const [moduleName, moduleInfo] of Object.entries(modules)) {
+      content += `    "${moduleName}": {\n`;
+      content += `      address: "${moduleInfo.address}",\n`;
+      content += `      functions: ${JSON.stringify(moduleInfo.functions, null, 4).split('\n').map(line => '      ' + line).join('\n')},\n`;
+      content += `      content: \`${moduleInfo.content}\`\n`;
+      content += '    },\n';
+    }
+
+    content += '  },\n';
+  }
+
+  content += '} as const;\n\n';
+  content += 'export default deployedModules;\n';
+
+  return content;
 }
 
 // Function to get deployed contract IDs
@@ -101,15 +281,25 @@ async function main(): Promise<void> {
   console.log('Account address:', accountAddress);
   console.log('Deployed package IDs:', deployedContractIds);
 
+  // Read existing modules
+  const existingModules = readExistingDeployedModules();
+  console.log('Existing modules:', Object.keys(existingModules));
+
+  const newModules: { [moduleName: string]: ModuleInfo } = {};
+
   for (const contractId of deployedContractIds) {
     try {
       const result = execSync(`iota client object --json ${contractId}`).toString();
       const objectData = JSON.parse(result) as IotaObjectResponse;
 
       if (objectData.type === "package" && objectData.content?.disassembled) {
-        // Extract module names from disassembled content
-        for (const [moduleName, _] of Object.entries(objectData.content.disassembled)) {
-          storeModuleAddress(network, moduleName, contractId);
+        for (const [moduleName, content] of Object.entries(objectData.content.disassembled)) {
+          const functions = extractFunctionSignatures(content);
+          newModules[moduleName] = {
+            address: contractId,
+            functions,
+            content
+          };
         }
       }
     } catch (error) {
@@ -121,6 +311,16 @@ async function main(): Promise<void> {
     }
   }
 
+  // Generate and write the deployedModules.ts file
+  const deployedModulesContent = generateDeployedModulesFile(existingModules, network, newModules);
+  fs.writeFileSync(
+    path.join(frontendModulesDir, 'deployedModules.ts'),
+    deployedModulesContent,
+    'utf-8'
+  );
+
+  console.log('Updated deployedModules.ts file');
+  console.log('New modules added:', Object.keys(newModules));
 }
 
 main().catch(console.error);
