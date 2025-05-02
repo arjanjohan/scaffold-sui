@@ -22,9 +22,9 @@ module.exports = {
           "base-300": "#d5e2f5",
           "base-content": "#212638",
           info: "#93BBFB",
-          success: "#34EEB6",
+          success: "#21b838",
           warning: "#FFCF72",
-          error: "#FF8863",
+          error: "#d64315",
 
           "--rounded-btn": "9999rem",
 
@@ -54,7 +54,7 @@ module.exports = {
           "base-300": "#03152e",
           "base-content": "#ffffff",
           info: "#385183",
-          success: "#34EEB6",
+          success: "#21b838",
           warning: "#FFCF72",
           error: "#FF8863",
 
