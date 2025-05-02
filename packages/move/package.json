@@ -4,17 +4,15 @@
   "scripts": {
     "client": "iota client new-env",
     "view-clients": "iota client envs",
-    "switch-client": "node utils/switch-client.js",
-    "account": "ts-node utils/init-account.ts",
+    "switch-client": "ts-node utils/switch-client.ts",
     "chain": "RUST_LOG=\"off,iota_node=info\" iota start --force-regenesis --with-faucet",
     "deploy": " ts-node utils/deploy.ts publish && ts-node utils/load-modules.ts",
     "compile": "iota move build",
     "test": "iota move test",
     "format": "iota move fmt",
-    "document": "iota move document"
+    "document": "iota move build --doc"
   },
   "dependencies": {
-    "@aptos-labs/ts-sdk": "^1.38.0",
     "@iota/iota-sdk": "^0.6.0",
     "axios": "^1.8.4",
     "got": "11.8.6",

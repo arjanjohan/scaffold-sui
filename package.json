@@ -9,11 +9,14 @@
     ]
   },
   "scripts": {
-    "account": "yarn workspace @scaffold-iota/move account",
+    "client": "yarn workspace @scaffold-iota/move client",
+    "view-clients": "yarn workspace @scaffold-iota/move view-clients",
+    "switch-client": "yarn workspace @scaffold-iota/move switch-client",
     "chain": "yarn workspace @scaffold-iota/move chain",
     "deploy": "yarn workspace @scaffold-iota/move deploy",
     "compile": "yarn workspace @scaffold-iota/move compile",
     "test": "yarn workspace @scaffold-iota/move test",
+    "document": "yarn workspace @scaffold-iota/move document",
     "format": "yarn next:format && yarn workspace @scaffold-iota/move format",
     "start": "yarn workspace @scaffold-iota/nextjs dev",
     "next:lint": "yarn workspace @scaffold-iota/nextjs lint",

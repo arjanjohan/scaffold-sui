@@ -19,7 +19,6 @@ module deployment_addr::counter {
         counter.owner
     }
 
-    #[view]
     public fun value(counter: &Counter): u64 {
         counter.value
     }
