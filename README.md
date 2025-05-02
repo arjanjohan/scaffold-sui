@@ -76,7 +76,7 @@ This command deploys the move modules to the network configured in the previous 
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your Move modules using the `Debug Modules` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+Visit your app on: `http://localhost:3000`. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
 **What's next**:
 
@@ -86,12 +86,10 @@ Visit your app on: `http://localhost:3000`. You can interact with your Move modu
 
 ## TODO
 
-- load deployed modules in frontend
 - typesafety for hooks
 - fix/complete network switching
 
 maybe:
-- debug tab
 - Add view tx hook
 
 After the hackathon I intend to create some PR's for IOTA repo's for issues that I encountered while building Scaffold IOTA:

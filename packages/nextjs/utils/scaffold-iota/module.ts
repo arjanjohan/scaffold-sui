@@ -19,6 +19,9 @@ type MoveBaseTypes = {
   "&TxContext": never;
 };
 
+// Debug type to inspect values
+type Debug<T> = T extends any ? { type: T } : never;
+
 // Helper type to extract function parameters from Move parameter strings
 type ExtractMoveParam<T extends string> = T extends keyof MoveBaseTypes
   ? MoveBaseTypes[T]
@@ -30,39 +33,11 @@ type ExtractMoveParam<T extends string> = T extends keyof MoveBaseTypes
         ? ExtractMoveParam<Inner>[]
         : T extends `option::Option<${infer Inner}>`
           ? ExtractMoveParam<Inner> | null
-          : unknown;
+          : string; // Any unknown type is passed as string ID
 
-type FilterNever<T extends readonly any[]> = T extends readonly [infer First, ...infer Rest]
-  ? ExtractMoveParam<First & string> extends never
-    ? FilterNever<Rest>
-    : [ExtractMoveParam<First & string>, ...FilterNever<Rest>]
+export type ExtractMoveParams<T extends readonly string[]> = T extends readonly [infer First, ...infer Rest]
+  ? [ExtractMoveParam<First & string>, ...ExtractMoveParams<Rest & readonly string[]>]
   : [];
-
-export type ExtractMoveParams<T extends readonly string[]> = FilterNever<T>;
-
-// Get all modules for a specific network
-type NetworkModules = (typeof deployedModulesData)[keyof typeof deployedModulesData];
-
-// Get all functions for a module
-type ModuleFunctions<TModule extends GenericModule> = {
-  [K in TModule["functions"][number]["name"]]: Extract<
-    TModule["functions"][number],
-    { name: K }
-  > extends infer F extends FunctionSignature
-    ? {
-        args: ExtractMoveParams<F["parameters"][number]["type"][]>;
-        tyArgs: [];
-      }
-    : never;
-};
-
-// Get all functions for a specific module
-export type ModuleEntryFunctions<TModuleName extends keyof NetworkModules> = ModuleFunctions<
-  Extract<NetworkModules[TModuleName], GenericModule>
->;
-
-// Get function names that are entry functions
-export type ModuleEntryFunctionNames<TModuleName extends keyof NetworkModules> = keyof ModuleEntryFunctions<TModuleName>;
 
 export type GenericModule = {
   address: string;
@@ -94,6 +69,40 @@ type Modules = (typeof deployedModulesData)["testnet"]; // TODO: do we need hard
 
 export type ModuleName = keyof Modules;
 export type Module<TModuleName extends ModuleName> = Modules[TModuleName];
+
+// Get all modules for a specific network
+type NetworkModules = (typeof deployedModulesData)[keyof typeof deployedModulesData];
+
+// Get all functions for a module
+type ModuleFunctions<TModule extends GenericModule> = {
+  [K in TModule["functions"][number]["name"]]: Extract<
+    TModule["functions"][number],
+    { name: K }
+  > extends infer F extends FunctionSignature
+    ? {
+        args: ExtractMoveParams<F["parameters"][number]["type"][]>;
+        tyArgs: [];
+      }
+    : never;
+};
+
+// Get all functions for a specific module
+export type ModuleEntryFunctions<TModuleName extends ModuleName> = ModuleFunctions<
+  Extract<Modules[TModuleName], GenericModule>
+>;
+
+// Debug a specific function's parameters
+export type DebugFunctionParams<TModuleName extends ModuleName, TFunctionName extends ModuleEntryFunctionNames<TModuleName>> =
+  Debug<{
+    module: TModuleName;
+    function: TFunctionName;
+    parameters: Extract<Extract<Modules[TModuleName], GenericModule>["functions"][number], { name: TFunctionName }>["parameters"];
+    parameterTypes: Extract<Extract<Modules[TModuleName], GenericModule>["functions"][number], { name: TFunctionName }>["parameters"][number]["type"][];
+    extracted: ModuleEntryFunctions<TModuleName>[TFunctionName];
+  }>;
+
+// Get function names that are entry functions
+export type ModuleEntryFunctionNames<TModuleName extends ModuleName> = keyof ModuleEntryFunctions<TModuleName>;
 
 export enum ModuleCodeStatus {
   "LOADING",

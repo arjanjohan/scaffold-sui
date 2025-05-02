@@ -27,12 +27,7 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Docs",
     href: "https://scaffold-iota-docs.vercel.app",
     icon: <ArrowTopRightOnSquareIcon className="h-4 w-4" />,
-  },
-  {
-    label: "Debug Modules",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
+  }
 ];
 
 export const HeaderMenuLinks = () => {
