@@ -2,9 +2,7 @@
   "name": "@scaffold-iota/move",
   "packageManager": "yarn@3.2.3",
   "scripts": {
-    "client": "iota client new-env",
-    "view-clients": "iota client envs",
-    "switch-client": "ts-node utils/switch-client.ts",
+    "client": "ts-node utils/client.ts",
     "chain": "RUST_LOG=\"off,iota_node=info\" iota start --force-regenesis --with-faucet",
     "deploy": " ts-node utils/deploy.ts publish && ts-node utils/load-modules.ts",
     "compile": "iota move build",
