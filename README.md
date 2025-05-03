@@ -11,17 +11,30 @@
 
 🧪 Scaffold IOTA is an open-source, cutting-edge toolkit for building decentralized applications (dApps) on IOTA. It's designed to streamline the process of creating and deploying Move smart contracts and building user interfaces that interact seamlessly with these smart contracts.
 
-⚙️ Built using Move, IOTA TS SDK, Next.js, Tailwind CSS, and TypeScript.
+⚙️ Built using Move, IOTA TS SDK, IOTA dApp Kit, Next.js, Tailwind CSS, and TypeScript.
 
 * 🛫 **Deployment Scripts**: Simplify and automate your deployment workflow.
 * ✅ **Hot Contract Reload**: Your frontend automatically adapts to changes in your smart contracts as you redeploy them.
-* 🪝 **Custom Hooks**: A collection of React hooks to simplify interactions with the IOTA blockchain
+* 🪝 **Custom Hooks**: A collection of React hooks to simplify interactions with the IOTA blockchain.
 * 🧱 **Components**: A library of common Web3 components to rapidly build your frontend.
 * 🔐 **Wallet Integration**: Connect to any IOTA-compatible wallet and interact with the IOTA network directly from your frontend.
 
-Perfect for hackathons, prototyping, or launching your next Move project!
+Perfect for hackathons, prototyping, or launching your next IOTA project!
 
 ![Landing page](assets/landing-page.png)
+
+## Project Structure
+```packages/
+├── move/               # Move smart contracts and tests
+│   ├── sources/       # Smart contract source files
+│   ├── test/          # Contract test files
+│   └── utils/         # Utility scripts
+├── nextjs/            # Frontend application
+    ├── app/           # Next.js application code
+    ├── components/    # Reusable React components
+    └── hooks/         # Custom React hooks
+```
+
 
 ## Requirements
 
@@ -50,14 +63,14 @@ yarn install
 yarn client
 ```
 
-This command sets up the IOTA client if it hasnt already. It prompts you to select a network (defaults to IOTA testnet if you just press `Enter`). Finally, you will be prompted to select the key scheme you want to use. If you are unsure which scheme to use just go with the default ed25519 scheme (option 0).
+This command sets up the IOTA client if it hasn't already. It prompts you to select a network (defaults to IOTA testnet if you just press `Enter`). Finally, you will be prompted to select the key scheme you want to use. If you are unsure which scheme to use just go with the default ed25519 scheme (option 0).
 
 To view the configuration use this command:
 ```
 yarn view-clients
 ```
 
-To switch to a certain configured enviroment, use this command:
+To switch to a certain configured environment, use this command:
 ```
 yarn switch-client <envAlias>
 ```
@@ -78,31 +91,24 @@ yarn start
 
 Visit your app on: `http://localhost:3000`. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
+**Note:** For a comprehensive list of available yarn commands and their usage, please refer to our [documentation](https://scaffold-iota-docs.vercel.app/commands).
+
 **What's next**:
 
 - Edit your smart contract `counter.move` in `packages/move/sources`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit your Move tests in: `packages/move/test`. To run test use `yarn test`
 
-## TODO
-
-
-
 ## Next steps
 
-Scaffold IOTA has successfully implemented core features essential for IOTA developers, providing a great starting point with NextJS. This version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
+I successfully implemented the core features essential for IOTA developers, providing a great starting point with Scaffold IOTA. This version offers a streamlined development experience with hot module reloading, custom hooks, and seamless wallet integration.
 
-In the scope of this hackathon, it was not possible to complete everything. Here's a list of issues (big and small) that are on the roadmap:
+In the scope of this hackathon, it was not possible to complete everything. Here's a list of issues (big and small) that are still on the roadmap:
 
-- Add type safety for `useScafffoldSubmitTransction` arguments. Module name and function names are working correctly.
-- Combine the `useScafffoldSubmitTransction` and `useSubmitTransction` hooks to accept addresses, and apply type safety only when address is not provided
-- Fix and enable network switching
-- Update docs with latest hook information
-- Add documentation and create tutorials for easier onboarding.
-- Develop more pre-built components for common dApp functionalities.
-- Integrate different templates/configurations for Move contracts
-- Update `filterAndSortTokenBalances` to use metadata instead of cointype
-
+- Add type safety for `useScafffoldSubmitTransction` function arguments. Module name and function names are working correctly with type safety.
+- Combine the `useScafffoldSubmitTransction` and `useSubmitTransction` hooks to accept addresses, and apply type safety only when address is not provided.
+- Fix and enable network switching (currently blocked by [this issue](https://discord.com/channels/1341659158071611445/1368142371426144266)).
+- Update `filterAndSortTokenBalances` to use metadata instead of cointype.
 
 ## Issues I ran into during development
 
