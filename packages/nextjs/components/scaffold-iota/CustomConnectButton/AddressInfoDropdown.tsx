@@ -116,10 +116,11 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
               </a>
             </button>
           </li>
-          <li className={selectingNetwork ? "hidden" : ""}>
+          <li className={selectingNetwork ? "hidden" : "opacity-25"}>
             <button
               className="btn-sm !rounded-xl flex gap-3 py-3"
               type="button"
+              disabled={true} // TODO: Disabled because switching doesnt work
               onClick={() => setSelectingNetwork(true)}
             >
               <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
