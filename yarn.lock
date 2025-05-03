@@ -718,6 +718,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@growthbook/growthbook-react@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@growthbook/growthbook-react@npm:1.4.1"
+  dependencies:
+    "@growthbook/growthbook": ^1.4.1
+  peerDependencies:
+    react: ^16.8.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: 2f4a04197ff5de60eb848e225fa3ae5f92274f3398ca6102fb59427d5335056b8f7125024ef8021d0e7a8187080f01a96f2978f456d22a4f4c662aa3533144e4
+  languageName: node
+  linkType: hard
+
+"@growthbook/growthbook@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@growthbook/growthbook@npm:1.4.1"
+  dependencies:
+    dom-mutator: ^0.6.0
+  checksum: 92de5a38f3fdccf4dce0852420f34ed1f2568b4e372709dec7a3d0b1d2d1441ff8dd100362fee28e64c47064b77c2c3f5cd2daee6af090957ff04d73cbd17577
+  languageName: node
+  linkType: hard
+
 "@heroicons/react@npm:^2.1.5":
   version: 2.2.0
   resolution: "@heroicons/react@npm:2.2.0"
@@ -3071,6 +3091,7 @@ __metadata:
   dependencies:
     "@apollo/client": ^3.12.4
     "@aptos-labs/wallet-adapter-react": ^4.1.2
+    "@growthbook/growthbook-react": ^1.4.1
     "@heroicons/react": ^2.1.5
     "@iota/dapp-kit": ^0.4.1
     "@iota/iota-sdk": ^0.6.0
@@ -6249,6 +6270,13 @@ __metadata:
   dependencies:
     esutils: ^2.0.2
   checksum: fd7673ca77fe26cd5cba38d816bc72d641f500f1f9b25b83e8ce28827fe2da7ad583a8da26ab6af85f834138cf8dae9f69b0cd6ab925f52ddab1754db44d99ce
+  languageName: node
+  linkType: hard
+
+"dom-mutator@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "dom-mutator@npm:0.6.0"
+  checksum: f6b32500d9d71f379940022057434db38fd404036968fdbf0d547b31a819c0ad2160edbf67f72e00b8ec7787b5ca04f19d5082fbf33f3644642b16f21e04cbf1
   languageName: node
   linkType: hard
 

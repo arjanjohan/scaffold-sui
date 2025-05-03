@@ -8,7 +8,7 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [defaultChains.iota_testnet, defaultChains.iota_devnet],
+  targetNetworks: [defaultChains.testnet, defaultChains.devnet],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)

@@ -3,16 +3,16 @@
 import Link from "next/link";
 import { useCurrentAccount } from "@iota/dapp-kit";
 import type { NextPage } from "next";
-import { BookOpenIcon, BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-iota";
+import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
 import { getObjectUrl } from "~~/utils/scaffold-iota/getExplorerPaths";
 import { modules } from "~~/utils/scaffold-iota/module";
 
 const Home: NextPage = () => {
   const account = useCurrentAccount();
-  const network = "testnet"; // TODO: fetch actual network from config
-  const networkModules = modules[network];
-
+  const { targetNetwork } = useTargetNetwork();
+  const networkModules = modules[targetNetwork.id];
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -66,15 +66,15 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <div className="w-full px-8 py-12">
+        <div className="flex-grow px-8 py-12">
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold">Your Deployed Modules ({network})</h2>
+            <h2 className="text-2xl font-bold text-center">Your Deployed Modules on {targetNetwork.name}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {networkModules ? (
                 Object.entries(networkModules).map(([moduleName, module]) => (
                   <Link
                     key={moduleName}
-                    href={getObjectUrl(module.address, network, undefined, moduleName)}
+                    href={getObjectUrl(module.address, targetNetwork.id, undefined, moduleName)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block"
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
                   </Link>
                 ))
               ) : (
-                <div className="text-center">No modules deployed on {network}</div>
+                <div className="text-center">No modules deployed on {targetNetwork.id}</div>
               )}
             </div>
           </div>

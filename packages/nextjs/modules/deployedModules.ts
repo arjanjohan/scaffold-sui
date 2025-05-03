@@ -3,7 +3,203 @@ import { GenericModulesDeclaration } from "~~/utils/scaffold-iota/module";
 
 const deployedModules = {
   devnet: {},
-  testnet: {},
+  testnet: {
+    counter: {
+      address: "0x5d3fc1d54691aa3fb753b35ef5b9598a4046ddf6ab02b24c2440052a06dbd2cf",
+      functions: [
+        {
+          name: "create",
+          parameters: [
+            {
+              name: "arg0",
+              type: "&mut TxContext",
+              isOption: false,
+            },
+          ],
+        },
+        {
+          name: "increment",
+          parameters: [
+            {
+              name: "arg0",
+              type: "&mut Counter",
+              isOption: false,
+            },
+          ],
+        },
+        {
+          name: "set_value",
+          parameters: [
+            {
+              name: "arg0",
+              type: "&mut Counter",
+              isOption: false,
+            },
+            {
+              name: "arg1",
+              type: "u64",
+              isOption: false,
+            },
+            {
+              name: "arg2",
+              type: "&TxContext",
+              isOption: false,
+            },
+          ],
+        },
+        {
+          name: "assert_value",
+          parameters: [
+            {
+              name: "arg0",
+              type: "&Counter",
+              isOption: false,
+            },
+            {
+              name: "arg1",
+              type: "u64",
+              isOption: false,
+            },
+          ],
+        },
+        {
+          name: "delete",
+          parameters: [
+            {
+              name: "arg0",
+              type: "Counter",
+              isOption: false,
+            },
+            {
+              name: "arg1",
+              type: "&TxContext",
+              isOption: false,
+            },
+          ],
+        },
+      ],
+      content: `// Move bytecode v6
+module 5d3fc1d54691aa3fb753b35ef5b9598a4046ddf6ab02b24c2440052a06dbd2cf.counter {
+use 0000000000000000000000000000000000000000000000000000000000000002::object;
+use 0000000000000000000000000000000000000000000000000000000000000002::transfer;
+use 0000000000000000000000000000000000000000000000000000000000000002::tx_context;
+
+struct Counter has key {
+	id: UID,
+	owner: address,
+	value: u64
+}
+
+public owner(Arg0: &Counter): address {
+B0:
+	0: MoveLoc[0](Arg0: &Counter)
+	1: ImmBorrowField[0](Counter.owner: address)
+	2: ReadRef
+	3: Ret
+}
+
+public value(Arg0: &Counter): u64 {
+B0:
+	0: MoveLoc[0](Arg0: &Counter)
+	1: ImmBorrowField[1](Counter.value: u64)
+	2: ReadRef
+	3: Ret
+}
+
+entry public create(Arg0: &mut TxContext) {
+B0:
+	0: CopyLoc[0](Arg0: &mut TxContext)
+	1: Call object::new(&mut TxContext): UID
+	2: MoveLoc[0](Arg0: &mut TxContext)
+	3: FreezeRef
+	4: Call tx_context::sender(&TxContext): address
+	5: LdU64(0)
+	6: Pack[0](Counter)
+	7: Call transfer::share_object<Counter>(Counter)
+	8: Ret
+}
+
+entry public increment(Arg0: &mut Counter) {
+B0:
+	0: CopyLoc[0](Arg0: &mut Counter)
+	1: ImmBorrowField[1](Counter.value: u64)
+	2: ReadRef
+	3: LdU64(1)
+	4: Add
+	5: MoveLoc[0](Arg0: &mut Counter)
+	6: MutBorrowField[1](Counter.value: u64)
+	7: WriteRef
+	8: Ret
+}
+
+entry public set_value(Arg0: &mut Counter, Arg1: u64, Arg2: &TxContext) {
+B0:
+	0: CopyLoc[0](Arg0: &mut Counter)
+	1: ImmBorrowField[0](Counter.owner: address)
+	2: ReadRef
+	3: MoveLoc[2](Arg2: &TxContext)
+	4: Call tx_context::sender(&TxContext): address
+	5: Eq
+	6: BrFalse(8)
+B1:
+	7: Branch(12)
+B2:
+	8: MoveLoc[0](Arg0: &mut Counter)
+	9: Pop
+	10: LdU64(0)
+	11: Abort
+B3:
+	12: MoveLoc[1](Arg1: u64)
+	13: MoveLoc[0](Arg0: &mut Counter)
+	14: MutBorrowField[1](Counter.value: u64)
+	15: WriteRef
+	16: Ret
+}
+
+entry public assert_value(Arg0: &Counter, Arg1: u64) {
+B0:
+	0: MoveLoc[0](Arg0: &Counter)
+	1: ImmBorrowField[1](Counter.value: u64)
+	2: ReadRef
+	3: MoveLoc[1](Arg1: u64)
+	4: Eq
+	5: BrFalse(7)
+B1:
+	6: Branch(9)
+B2:
+	7: LdU64(0)
+	8: Abort
+B3:
+	9: Ret
+}
+
+entry public delete(Arg0: Counter, Arg1: &TxContext) {
+B0:
+	0: ImmBorrowLoc[0](Arg0: Counter)
+	1: ImmBorrowField[0](Counter.owner: address)
+	2: ReadRef
+	3: MoveLoc[1](Arg1: &TxContext)
+	4: Call tx_context::sender(&TxContext): address
+	5: Eq
+	6: BrFalse(8)
+B1:
+	7: Branch(10)
+B2:
+	8: LdU64(0)
+	9: Abort
+B3:
+	10: MoveLoc[0](Arg0: Counter)
+	11: Unpack[0](Counter)
+	12: Pop
+	13: Pop
+	14: Call object::delete(UID)
+	15: Ret
+}
+
+}
+`,
+    },
+  },
 } as const;
 
 export default deployedModules satisfies GenericModulesDeclaration;

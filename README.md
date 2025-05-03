@@ -86,15 +86,7 @@ Visit your app on: `http://localhost:3000`. You can tweak the app config in `pac
 
 ## TODO
 
-- typesafety for hooks
-- fix/complete network switching
 
-maybe:
-- Add view tx hook
-
-After the hackathon I intend to create some PR's for IOTA repo's for issues that I encountered while building Scaffold IOTA:
-- Add view functions to IOTA explorer repo
-- Add fix for [this NextJS setup issue](https://discord.com/channels/1341659158071611445/1360255915110039612). I will propose to either mention these `.css` files in the developer docs or make a fix to wallet so they arent needed anymore.
 
 ## Next steps
 
@@ -102,24 +94,29 @@ Scaffold IOTA has successfully implemented core features essential for IOTA deve
 
 In the scope of this hackathon, it was not possible to complete everything. Here's a list of issues (big and small) that are on the roadmap:
 
+- Add type safety for `useScafffoldSubmitTransction` arguments. Module name and function names are working correctly.
+- Combine the `useScafffoldSubmitTransction` and `useSubmitTransction` hooks to accept addresses, and apply type safety only when address is not provided
+- Fix and enable network switching
+- Update docs with latest hook information
 - Add documentation and create tutorials for easier onboarding.
 - Develop more pre-built components for common dApp functionalities.
 - Integrate different templates/configurations for Move contracts
 - Update `filterAndSortTokenBalances` to use metadata instead of cointype
 
-We're committed to evolving Scaffold IOTA based on community feedback and emerging best practices in the IOTA ecosystem. For a detailed list of upcoming features and to contribute ideas, please check our [GitHub Issues](https://github.com/arjanjohan/scaffold-iota/issues).
 
 ## Issues I ran into during development
 
-#### Wallet popup not showing
-In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion](https://discord.com/channels/1341659158071611445/1360255915110039612) where the solution was posted. Maybe the
+After the hackathon I intend to create some PR's for IOTA repo's for issues that I encountered while building Scaffold IOTA.
 
+#### Wallet popup not showing
+In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion](https://discord.com/channels/1341659158071611445/1360255915110039612) where the solution was posted. I will propose to either mention these `.css` files in the developer docs or make a fix to wallet so they arent needed anymore.
 
 ## Links
 
-- [Documentation]()
+- [Documentation](https://scaffold-iota-docs.vercel.app/)
 - [Example deployment](https://scaffold-iota.vercel.app/)
 - [Github](https://github.com/arjanjohan/scaffold-iota)
+- [Documentation Github](https://github.com/arjanjohan/scaffold-iota-docs)
 
 ## Credits
 

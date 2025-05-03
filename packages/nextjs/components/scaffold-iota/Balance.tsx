@@ -8,7 +8,7 @@ type BalanceProps = {
   coinType?: string;
 };
 
-export const Balance = ({ address, decimals = 10, coinType = IOTA_TYPE_ARG }: BalanceProps) => {
+export const Balance = ({ address, decimals = 9, coinType = IOTA_TYPE_ARG }: BalanceProps) => {
   const { balance, isLoading, isError } = useGetCoinBalance(coinType, address);
 
   if (isLoading) {

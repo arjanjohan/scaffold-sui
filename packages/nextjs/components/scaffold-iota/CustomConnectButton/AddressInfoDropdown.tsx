@@ -14,8 +14,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
+import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
 import scaffoldConfig from "~~/scaffold.config";
-import { useGlobalState } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-iota/notification";
 
 type AddressInfoDropdownProps = {
@@ -35,7 +35,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
   useOutsideClick(dropdownRef, closeDropdown);
 
   const { mutate: disconnect } = useDisconnectWallet();
-  const { targetNetwork, setTargetNetwork } = useGlobalState();
+  const { targetNetwork, setTargetNetwork } = useTargetNetwork();
 
   const handleFaucetRequest = async () => {
     const notificationId = notification.loading("Requesting tokens from faucet...");
@@ -129,22 +129,26 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
             <span className="text-sm font-normal">Select Network</span>
           </li>
           {selectingNetwork &&
-            scaffoldConfig.targetNetworks.map(network => (
-              <li key={network.id} className="!p-0">
-                <button
-                  className={`btn-sm !rounded-xl flex gap-3 py-3 ${
-                    targetNetwork.id === network.id ? "bg-secondary" : ""
-                  }`}
-                  type="button"
-                  onClick={() => {
-                    setTargetNetwork(network);
-                    setSelectingNetwork(false);
-                  }}
-                >
-                  <span className="whitespace-nowrap capitalize">{network.name}</span>
-                </button>
-              </li>
-            ))}
+            scaffoldConfig.targetNetworks.map(
+              (
+                network, // TODO: replace with availableNetworks from useTargetNetwork
+              ) => (
+                <li key={network.id} className="!p-0">
+                  <button
+                    className={`btn-sm !rounded-xl flex gap-3 py-3 ${
+                      targetNetwork.id === network.id ? "bg-secondary" : ""
+                    }`}
+                    type="button"
+                    onClick={() => {
+                      setTargetNetwork(network);
+                      setSelectingNetwork(false);
+                    }}
+                  >
+                    <span className="whitespace-nowrap capitalize">{network.name}</span>
+                  </button>
+                </li>
+              ),
+            )}
           <li className={selectingNetwork || !targetNetwork.faucet ? "hidden" : ""}>
             <button
               className="btn-sm !rounded-xl flex gap-3 py-3"

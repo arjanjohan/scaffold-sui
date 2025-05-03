@@ -1,26 +1,25 @@
 import deployedModulesData from "~~/modules/deployedModules";
 
-// Helper type to create a tuple of any type with specific length
-type TupleOfLength<L extends number, T = any> = [T, ...T[]] & { length: L };
-
 // Base types for Sui Move
 type MoveBaseTypes = {
-  "u8": number;
-  "u16": number;
-  "u32": number;
-  "u64": bigint;
-  "u128": bigint;
-  "u256": bigint;
-  "bool": boolean;
-  "address": string;
+  u8: number;
+  u16: number;
+  u32: number;
+  u64: bigint;
+  u128: bigint;
+  u256: bigint;
+  bool: boolean;
+  address: string;
   "vector<u8>": Uint8Array;
   "vector<T>": any[];
   "&mut TxContext": never;
   "&TxContext": never;
 };
 
-// Debug type to inspect values
-type Debug<T> = T extends any ? { type: T } : never;
+// // Debug type to inspect values
+// type Debug<T> = {
+//   [K in keyof T]: T[K];
+// };
 
 // Helper type to extract function parameters from Move parameter strings
 type ExtractMoveParam<T extends string> = T extends keyof MoveBaseTypes
@@ -33,10 +32,12 @@ type ExtractMoveParam<T extends string> = T extends keyof MoveBaseTypes
         ? ExtractMoveParam<Inner>[]
         : T extends `option::Option<${infer Inner}>`
           ? ExtractMoveParam<Inner> | null
-          : string; // Any unknown type is passed as string ID
+          : string;
 
 export type ExtractMoveParams<T extends readonly string[]> = T extends readonly [infer First, ...infer Rest]
-  ? [ExtractMoveParam<First & string>, ...ExtractMoveParams<Rest & readonly string[]>]
+  ? First extends string
+    ? [ExtractMoveParam<First>, ...ExtractMoveParams<Rest & readonly string[]>]
+    : never
   : [];
 
 export type GenericModule = {
@@ -64,24 +65,24 @@ export type GenericModulesDeclaration = {
 
 export const modules = deployedModulesData as GenericModulesDeclaration;
 
-type Network = keyof typeof deployedModulesData;
+// type Network = keyof typeof deployedModulesData;
 type Modules = (typeof deployedModulesData)["testnet"]; // TODO: do we need hardcoded network here?
 
 export type ModuleName = keyof Modules;
 export type Module<TModuleName extends ModuleName> = Modules[TModuleName];
 
-// Get all modules for a specific network
-type NetworkModules = (typeof deployedModulesData)[keyof typeof deployedModulesData];
+// // Get all modules for a specific network
+// type NetworkModules = (typeof deployedModulesData)[keyof typeof deployedModulesData];
 
 // Get all functions for a module
 type ModuleFunctions<TModule extends GenericModule> = {
   [K in TModule["functions"][number]["name"]]: Extract<
     TModule["functions"][number],
     { name: K }
-  > extends infer F extends FunctionSignature
+  > extends FunctionSignature
     ? {
-        args: ExtractMoveParams<F["parameters"][number]["type"][]>;
-        tyArgs: [];
+        args: any[];
+        tyArgs: any[];
       }
     : never;
 };
@@ -91,15 +92,25 @@ export type ModuleEntryFunctions<TModuleName extends ModuleName> = ModuleFunctio
   Extract<Modules[TModuleName], GenericModule>
 >;
 
-// Debug a specific function's parameters
-export type DebugFunctionParams<TModuleName extends ModuleName, TFunctionName extends ModuleEntryFunctionNames<TModuleName>> =
-  Debug<{
-    module: TModuleName;
-    function: TFunctionName;
-    parameters: Extract<Extract<Modules[TModuleName], GenericModule>["functions"][number], { name: TFunctionName }>["parameters"];
-    parameterTypes: Extract<Extract<Modules[TModuleName], GenericModule>["functions"][number], { name: TFunctionName }>["parameters"][number]["type"][];
-    extracted: ModuleEntryFunctions<TModuleName>[TFunctionName];
-  }>;
+// // Debug a specific function's parameters
+// export type DebugFunctionParams<TModuleName extends ModuleName, TFunctionName extends ModuleEntryFunctionNames<TModuleName>> =
+//   Debug<{
+//     step4: ExtractMoveParams<["&mut Counter"]>;
+//     step5: ["&mut Counter"] extends [infer T] ? [ExtractMoveParam<T & string>] : never;
+//     step6: {
+//       tupleType: ["&mut Counter"];
+//       firstElement: ["&mut Counter"][0];
+//       isTuple: ["&mut Counter"] extends [any] ? true : false;
+//       inferredType: ["&mut Counter"] extends [infer T] ? T : never;
+//       extractedType: ["&mut Counter"] extends [infer T] ? ExtractMoveParam<T & string> : never;
+//       test1: ["&mut Counter"] extends [string] ? true : false;
+//       test2: ["&mut Counter"] extends readonly [string] ? true : false;
+//       test3: ["&mut Counter"] extends [infer T extends string] ? T : never;
+//       test4: ExtractMoveParam<"&mut Counter">;
+//       test5: ["&mut Counter"] extends [string] ? [string] : never;
+//       test6: ["&mut Counter"] extends readonly [string] ? [string] : never;
+//     };
+//   }>;
 
 // Get function names that are entry functions
 export type ModuleEntryFunctionNames<TModuleName extends ModuleName> = keyof ModuleEntryFunctions<TModuleName>;

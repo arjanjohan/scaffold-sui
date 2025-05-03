@@ -10,14 +10,14 @@ export type Chain = {
 };
 
 export const defaultChains = {
-  iota_devnet: {
+  devnet: {
     id: "devnet",
     name: "IOTA Devnet",
     url: getFullnodeUrl("devnet"),
     isTestnet: true,
     faucet: getFaucetHost("devnet"),
   },
-  iota_testnet: {
+  testnet: {
     id: "testnet",
     name: "IOTA Testnet",
     url: getFullnodeUrl("testnet"),

@@ -4,11 +4,11 @@ import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { ConnectButton, useCurrentAccount } from "@iota/dapp-kit";
 import { Balance } from "~~/components/scaffold-iota";
-import { useGlobalState } from "~~/services/store/store";
+import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
 import { getAddressUrl } from "~~/utils/scaffold-iota/getExplorerPaths";
 
 export const CustomConnectButton = () => {
-  const { targetNetwork } = useGlobalState();
+  const { targetNetwork } = useTargetNetwork();
   const account = useCurrentAccount();
   const connected = account !== null;
 

@@ -4,24 +4,34 @@ import { useState } from "react";
 import { useCurrentAccount } from "@iota/dapp-kit";
 import { NextPage } from "next";
 import { Address } from "~~/components/scaffold-iota";
+import { TransactionResponse, TransactionResponseType } from "~~/components/scaffold-iota/TransactionResponse";
 import { useGetObject } from "~~/hooks/scaffold-iota/useGetObject";
-import useSubmitTransaction from "~~/hooks/scaffold-iota/useSubmitTransaction";
+import { useScaffoldGetObject } from "~~/hooks/scaffold-iota/useScaffoldGetObject";
+import useScaffoldSubmitTransaction from "~~/hooks/scaffold-iota/useScaffoldSubmitTransaction";
+
+// import { DebugFunctionParams } from "~~/utils/scaffold-iota/module";
 
 const CounterPage: NextPage = () => {
   const moduleName = "counter";
-  const moduleAddress = "0xd5b0600278eaeb8c930bebc86e9b1565a4550eb0ca12db2044f46e281c731e81"; // TODO: Get this from deployments file
+  const { moduleAddress } = useScaffoldGetObject(moduleName);
 
   const account = useCurrentAccount();
   const [newValue, setNewValue] = useState<string>("");
   const [manualObjectId, setManualObjectId] = useState<string>("");
+  const [transactionResponse, setTransactionResponse] = useState<TransactionResponseType | null>(null);
 
-  const { submitTransaction } = useSubmitTransaction(moduleName, moduleAddress);
+  const { submitTransaction } = useScaffoldSubmitTransaction(moduleName);
   const { data: counterObject, refetch: refetchCounter } = useGetObject(manualObjectId);
 
   // Extract counter data
   const counterData = counterObject?.data?.content as { fields?: { value: number; owner: string } };
   const counterValue = counterData?.fields?.value;
   const counterOwner = counterData?.fields?.owner;
+
+  // // Add this type to see the debug output
+  // type IncrementParams = DebugFunctionParams<"counter", "increment">;
+  // type SetValueParams = DebugFunctionParams<"counter", "set_value">;
+  // type DeleteParams = DebugFunctionParams<"counter", "delete">;
 
   // Helper function to handle transaction success
   const handleTransactionSuccess = async () => {
@@ -33,11 +43,17 @@ const CounterPage: NextPage = () => {
   const createCounter = async () => {
     try {
       const result = await submitTransaction("create", []);
+      setTransactionResponse(result);
       if (result.transactionSubmitted && result.success) {
         await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error creating counter:", error);
+      setTransactionResponse({
+        transactionSubmitted: true,
+        success: false,
+        message: "Failed to create counter",
+      });
     }
   };
 
@@ -46,11 +62,17 @@ const CounterPage: NextPage = () => {
     if (!manualObjectId) return;
     try {
       const result = await submitTransaction("increment", [manualObjectId]);
+      setTransactionResponse(result);
       if (result.transactionSubmitted && result.success) {
         await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error incrementing counter:", error);
+      setTransactionResponse({
+        transactionSubmitted: true,
+        success: false,
+        message: "Failed to increment counter",
+      });
     }
   };
 
@@ -59,12 +81,18 @@ const CounterPage: NextPage = () => {
     if (!manualObjectId || !newValue) return;
     try {
       const result = await submitTransaction("set_value", [manualObjectId, parseInt(newValue)]);
+      setTransactionResponse(result);
       if (result.transactionSubmitted && result.success) {
         setNewValue("");
         await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error setting counter value:", error);
+      setTransactionResponse({
+        transactionSubmitted: true,
+        success: false,
+        message: "Failed to set counter value",
+      });
     }
   };
 
@@ -73,12 +101,18 @@ const CounterPage: NextPage = () => {
     if (!manualObjectId) return;
     try {
       const result = await submitTransaction("delete", [manualObjectId]);
+      setTransactionResponse(result);
       if (result.transactionSubmitted && result.success) {
         setManualObjectId("");
         await handleTransactionSuccess();
       }
     } catch (error) {
       console.error("Error deleting counter:", error);
+      setTransactionResponse({
+        transactionSubmitted: true,
+        success: false,
+        message: "Failed to delete counter",
+      });
     }
   };
 
@@ -92,6 +126,12 @@ const CounterPage: NextPage = () => {
           <p className="my-2 font-medium">Smart contract address:</p>
           <Address address={moduleAddress} />
         </div>
+        {/* Transaction Response Area */}
+        {transactionResponse && (
+          <div className="mt-4 w-full">
+            <TransactionResponse transactionResponse={transactionResponse} />
+          </div>
+        )}
       </div>
 
       {/* Create Counter Section */}
@@ -106,6 +146,11 @@ const CounterPage: NextPage = () => {
       {/* Counter Controls Section */}
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">Counter Controls</h2>
+        <p className="text-lg">Current Value: {counterValue}</p>
+        <p className="text-sm">
+          Owner: <Address address={counterOwner || ""} />
+        </p>
+
         <p className="text-sm">Enter a counter object ID to interact with it.</p>
 
         <input
@@ -151,15 +196,6 @@ const CounterPage: NextPage = () => {
         >
           Delete Counter
         </button>
-
-        {counterValue !== undefined && (
-          <div className="mt-4 text-center">
-            <p className="text-lg">Current Value: {counterValue}</p>
-            <p className="text-sm">
-              Owner: <Address address={counterOwner || ""} />
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

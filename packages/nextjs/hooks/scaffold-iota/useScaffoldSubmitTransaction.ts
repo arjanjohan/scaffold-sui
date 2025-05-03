@@ -1,30 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNormalizedMoveModule } from "./useNormalizedMoveModule";
+import { type TransactionResponse } from "./useSubmitTransaction";
+import { useTargetNetwork } from "./useTargetNetwork";
 import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@iota/dapp-kit";
 import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@iota/iota-sdk/transactions";
+import modules from "~~/modules/deployedModules";
+import { ModuleEntryFunctionNames, ModuleEntryFunctions, ModuleName } from "~~/utils/scaffold-iota/module";
 
-export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
-
-// "submission" here means that the transaction is posted on chain and gas is paid.
-// However, the status of the transaction might not be "success".
-export type TransactionResponseOnSubmission = {
-  transactionSubmitted: true;
-  transactionHash: string;
-  success: boolean; // indicates if the transaction submitted but failed or not
-  message?: string; // error message if the transaction failed
-};
-
-export type TransactionResponseOnError = {
-  transactionSubmitted: false;
-  message: string;
-};
-
-const useSubmitTransaction = (moduleName: string, moduleAddress: string) => {
+const useScaffoldSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModuleName) => {
   const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
 
   const currentAccount = useCurrentAccount();
   const iotaClient = useIotaClient();
+  const { targetNetwork } = useTargetNetwork();
+
+  // Get module address from deployed modules if not provided
+  const networkModules = modules[targetNetwork.id as keyof typeof modules];
+  const moduleAddress = networkModules && (networkModules as any)[moduleName]?.address;
   const { data: normalizedModule } = useNormalizedMoveModule(moduleAddress, moduleName);
 
   const { mutateAsync: signAndExecuteTransaction } = useSignAndExecuteTransaction({
@@ -47,15 +40,15 @@ const useSubmitTransaction = (moduleName: string, moduleAddress: string) => {
     }
   }, [transactionResponse]);
 
-  async function submitTransaction(
-    functionName: string,
-    args: any[] = [],
-    tyArgs: string[] = [],
+  async function submitTransaction<TFunctionName extends ModuleEntryFunctionNames<TModuleName>>(
+    functionName: TFunctionName,
+    args: ModuleEntryFunctions<TModuleName>[TFunctionName]["args"],
+    tyArgs: ModuleEntryFunctions<TModuleName>[TFunctionName]["tyArgs"] = [],
   ): Promise<TransactionResponse> {
     if (!moduleAddress || !currentAccount) {
       const response: TransactionResponse = {
         transactionSubmitted: false,
-        message: !moduleAddress ? "Module address not provided" : "No account connected",
+        message: !moduleAddress ? "Module not found" : "No account connected",
       };
       setTransactionResponse(response);
       return response;
@@ -86,7 +79,7 @@ const useSubmitTransaction = (moduleName: string, moduleAddress: string) => {
       const tx = new Transaction();
       tx.moveCall({
         target: `${moduleAddress}::${moduleName}::${functionName}`,
-        typeArguments: tyArgs,
+        typeArguments: tyArgs ?? [],
         arguments: args.map((param, i) => {
           const paramType = functionDetails.parameters[i];
           const moveTypeSignature = normalizedTypeToMoveTypeSignature(paramType);
@@ -139,4 +132,4 @@ const useSubmitTransaction = (moduleName: string, moduleAddress: string) => {
   };
 };
 
-export default useSubmitTransaction;
+export default useScaffoldSubmitTransaction;

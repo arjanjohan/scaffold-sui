@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowTopRightOnSquareIcon, Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { CustomConnectButton } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
 
@@ -27,7 +27,7 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Docs",
     href: "https://scaffold-iota-docs.vercel.app",
     icon: <ArrowTopRightOnSquareIcon className="h-4 w-4" />,
-  }
+  },
 ];
 
 export const HeaderMenuLinks = () => {
