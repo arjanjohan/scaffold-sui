@@ -65,16 +65,6 @@ yarn client
 
 This command sets up the IOTA client if it hasn't already. It prompts you to select a network (defaults to IOTA testnet if you just press `Enter`). Finally, you will be prompted to select the key scheme you want to use. If you are unsure which scheme to use just go with the default ed25519 scheme (option 0).
 
-To view the configuration use this command:
-```
-yarn view-clients
-```
-
-To switch to a certain configured environment, use this command:
-```
-yarn switch-client <envAlias>
-```
-
 3. Deploy the test modules:
 
 ```
@@ -117,6 +107,8 @@ In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion
 
 ## Links
 
+- [Demo video](https://youtu.be/3OafOIEh72E)
+- [Pitchdeck](https://docs.google.com/presentation/d/1Mxo4JYkDpEcYhN80ku1A6z0SFwhSCSkPkt35yUBfbBE/edit?usp=sharing)
 - [Documentation](https://scaffold-iota-docs.vercel.app/)
 - [Example deployment](https://scaffold-iota.vercel.app/)
 - [Github](https://github.com/arjanjohan/scaffold-iota)
