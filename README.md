@@ -112,10 +112,8 @@ In the scope of this hackathon, it was not possible to complete everything. Here
 
 ## Issues I ran into during development
 
-After the hackathon I intend to create some PR's for IOTA repo's for issues that I encountered while building Scaffold IOTA.
-
 #### Wallet popup not showing
-In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion](https://discord.com/channels/1341659158071611445/1360255915110039612) where the solution was posted. I will propose to either mention these `.css` files in the developer docs or make a fix to wallet so they arent needed anymore.
+In `layout.tsx` I had to add 2 css files to fix it. See [this Discord discussion](https://discord.com/channels/1341659158071611445/1360255915110039612) where the solution was posted. I will propose to either mention these `.css` files in the developer docs or make a fix to wallet so they arent needed anymore. [I created a PR on the IOTA doc for this](https://github.com/iotaledger/iota/pull/6722).
 
 ## Links
 
