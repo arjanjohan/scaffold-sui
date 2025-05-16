@@ -1,4 +1,4 @@
-import { useIotaClientContext } from "@iota/dapp-kit";
+import { useIotaClientContext } from "@mysten/dapp-kit";
 import scaffoldConfig from "~~/scaffold.config";
 import { Chain } from "~~/utils/scaffold-iota/chains";
 

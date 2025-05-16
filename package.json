@@ -1,5 +1,5 @@
 {
-  "name": "scaffold-iota",
+  "name": "scaffold-sui",
   "version": "0.0.1",
   "private": true,
   "workspaces": {
@@ -9,23 +9,23 @@
     ]
   },
   "scripts": {
-    "client": "yarn workspace @scaffold-iota/move client",
-    "chain": "yarn workspace @scaffold-iota/move chain",
-    "deploy": "yarn workspace @scaffold-iota/move deploy",
-    "compile": "yarn workspace @scaffold-iota/move compile",
-    "test": "yarn workspace @scaffold-iota/move test",
-    "document": "yarn workspace @scaffold-iota/move document",
-    "format": "yarn next:format && yarn workspace @scaffold-iota/move format",
-    "start": "yarn workspace @scaffold-iota/nextjs dev",
-    "next:lint": "yarn workspace @scaffold-iota/nextjs lint",
-    "next:format": "yarn workspace @scaffold-iota/nextjs format",
-    "next:check-types": "yarn workspace @scaffold-iota/nextjs check-types",
-    "next:build": "yarn workspace @scaffold-iota/nextjs build",
-    "next:serve": "yarn workspace @scaffold-iota/nextjs serve",
+    "client": "yarn workspace @scaffold-sui/move client",
+    "chain": "yarn workspace @scaffold-sui/move chain",
+    "deploy": "yarn workspace @scaffold-sui/move deploy",
+    "compile": "yarn workspace @scaffold-sui/move compile",
+    "test": "yarn workspace @scaffold-sui/move test",
+    "document": "yarn workspace @scaffold-sui/move document",
+    "format": "yarn next:format && yarn workspace @scaffold-sui/move format",
+    "start": "yarn workspace @scaffold-sui/nextjs dev",
+    "next:lint": "yarn workspace @scaffold-sui/nextjs lint",
+    "next:format": "yarn workspace @scaffold-sui/nextjs format",
+    "next:check-types": "yarn workspace @scaffold-sui/nextjs check-types",
+    "next:build": "yarn workspace @scaffold-sui/nextjs build",
+    "next:serve": "yarn workspace @scaffold-sui/nextjs serve",
     "postinstall": "husky install",
     "precommit": "lint-staged",
-    "vercel": "yarn workspace @scaffold-iota/nextjs vercel",
-    "vercel:yolo": "yarn workspace @scaffold-iota/nextjs vercel:yolo"
+    "vercel": "yarn workspace @scaffold-sui/nextjs vercel",
+    "vercel:yolo": "yarn workspace @scaffold-sui/nextjs vercel:yolo"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useCurrentAccount } from "@iota/dapp-kit";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 import { NextPage } from "next";
 import { Address } from "~~/components/scaffold-iota";
 import { TransactionResponse, TransactionResponseType } from "~~/components/scaffold-iota/TransactionResponse";

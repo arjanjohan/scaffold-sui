@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNormalizedMoveModule } from "./useNormalizedMoveModule";
-import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@iota/dapp-kit";
-import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@iota/iota-sdk/transactions";
+import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@mysten/sui/transactions";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
 

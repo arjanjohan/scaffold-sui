@@ -1,4 +1,4 @@
-import "@iota/dapp-kit/dist/index.css";
+import "@mysten/dapp-kit/dist/index.css";
 import "@radix-ui/themes/styles.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { ScaffoldIotaAppWithProviders } from "~~/components/ScaffoldIotaAppWithProviders";

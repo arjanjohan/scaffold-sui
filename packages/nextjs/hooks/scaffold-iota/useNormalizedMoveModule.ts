@@ -2,8 +2,8 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@iota/dapp-kit';
-import { type IotaMoveNormalizedModule } from '@iota/iota-sdk/src/client';
+import { useIotaClient } from '@mysten/dapp-kit';
+import { type IotaMoveNormalizedModule } from '@mysten/sui/src/client';
 import { type UseQueryResult, useQuery } from '@tanstack/react-query';
 
 export function useNormalizedMoveModule(

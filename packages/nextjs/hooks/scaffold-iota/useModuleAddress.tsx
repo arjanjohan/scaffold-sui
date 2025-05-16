@@ -1,4 +1,4 @@
-import { useIotaClientContext } from "@iota/dapp-kit";
+import { useIotaClientContext } from "@mysten/dapp-kit";
 import modules from "~~/modules/deployedModules";
 import { ModuleName } from "~~/utils/scaffold-iota/module";
 

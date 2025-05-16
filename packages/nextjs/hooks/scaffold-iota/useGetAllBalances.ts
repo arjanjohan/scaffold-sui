@@ -1,7 +1,7 @@
 // Copyright (c) 2025 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClientQuery } from '@iota/dapp-kit';
+import { useIotaClientQuery } from '@mysten/dapp-kit';
 import { filterAndSortTokenBalances } from '~~/utils/scaffold-iota/filterAndSortTokenBalances';
 import { useCoinsReFetchingConfig } from './';
 

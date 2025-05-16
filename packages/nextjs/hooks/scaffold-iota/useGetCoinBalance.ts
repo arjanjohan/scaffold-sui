@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@iota/dapp-kit';
+import { useIotaClient } from '@mysten/dapp-kit';
 import { useQuery } from '@tanstack/react-query';
 
 const MAX_COINS_PER_REQUEST = 10;

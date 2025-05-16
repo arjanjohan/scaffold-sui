@@ -2,8 +2,8 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@iota/dapp-kit';
-import type { CoinStruct, PaginatedCoins } from '@iota/iota-sdk/client';
+import { useIotaClient } from '@mysten/dapp-kit';
+import type { CoinStruct, PaginatedCoins } from '@mysten/sui/client';
 import { useQuery } from '@tanstack/react-query';
 
 const MAX_COINS_PER_REQUEST = 100;

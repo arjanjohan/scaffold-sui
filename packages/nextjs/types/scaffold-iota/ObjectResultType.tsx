@@ -4,7 +4,7 @@
 
 import { parseObjectType } from '~~/utils/scaffold-iota/objectUtils';
 
-import type { IotaObjectResponse, ObjectOwner, MoveStruct } from '@iota/iota-sdk/client';
+import type { IotaObjectResponse, ObjectOwner, MoveStruct } from '@mysten/sui/client';
 
 export type DataType = {
     id: string;

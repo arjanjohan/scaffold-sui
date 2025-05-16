@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { useDisconnectWallet } from "@iota/dapp-kit";
-import { getFaucetHost, requestIotaFromFaucetV0 } from "@iota/iota-sdk/faucet";
+import { useDisconnectWallet } from "@mysten/dapp-kit";
+import { getFaucetHost, requestIotaFromFaucetV0 } from "@mysten/sui/faucet";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftEndOnRectangleIcon,

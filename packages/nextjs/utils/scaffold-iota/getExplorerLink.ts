@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { getCustomNetwork } from '.';
-import { getNetwork, Network, NetworkId } from '@iota/iota-sdk/client';
+import { getNetwork, Network, NetworkId } from '@mysten/sui/client';
 import { getAddressUrl, getObjectUrl, getTransactionUrl, getValidatorUrl } from '.';
 
 export enum ExplorerLinkType {

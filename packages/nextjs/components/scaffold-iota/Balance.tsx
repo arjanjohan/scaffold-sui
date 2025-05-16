@@ -1,4 +1,4 @@
-import { IOTA_TYPE_ARG } from "@iota/iota-sdk/utils";
+import { IOTA_TYPE_ARG } from "@mysten/sui/utils";
 import { useGetCoinBalance } from "~~/hooks/scaffold-iota";
 import { getFormattedBalanceStr } from "~~/utils/scaffold-iota/ContentValue/CurrencyValue";
 

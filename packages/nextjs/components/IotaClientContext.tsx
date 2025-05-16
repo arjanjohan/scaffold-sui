@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IotaClientProvider, WalletProvider, createNetworkConfig } from "@iota/dapp-kit";
+import { IotaClientProvider, WalletProvider, createNetworkConfig } from "@mysten/dapp-kit";
 import scaffoldConfig from "~~/scaffold.config";
 
 // Config options for the networks you want to connect to

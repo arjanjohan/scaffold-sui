@@ -1,5 +1,5 @@
 {
-  "name": "@scaffold-iota/move",
+  "name": "@scaffold-sui/move",
   "packageManager": "yarn@3.2.3",
   "scripts": {
     "client": "ts-node utils/client.ts",
@@ -11,7 +11,7 @@
     "document": "iota move build --doc"
   },
   "dependencies": {
-    "@iota/iota-sdk": "^0.6.0",
+    "@mysten/sui": "^0.6.0",
     "axios": "^1.8.4",
     "got": "11.8.6",
     "js-yaml": "^4.1.0",

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCurrentAccount } from "@iota/dapp-kit";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 import type { NextPage } from "next";
 import { BookOpenIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-iota";

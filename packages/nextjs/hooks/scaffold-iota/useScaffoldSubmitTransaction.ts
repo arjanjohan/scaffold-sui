@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNormalizedMoveModule } from "./useNormalizedMoveModule";
 import { type TransactionResponse } from "./useSubmitTransaction";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@iota/dapp-kit";
-import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@iota/iota-sdk/transactions";
+import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@mysten/sui/transactions";
 import modules from "~~/modules/deployedModules";
 import { ModuleEntryFunctionNames, ModuleEntryFunctions, ModuleName } from "~~/utils/scaffold-iota/module";
 

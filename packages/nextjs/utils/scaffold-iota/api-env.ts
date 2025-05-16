@@ -7,7 +7,7 @@ import {
     getNetwork,
     Network,
     type NetworkConfiguration,
-} from '@iota/iota-sdk/client';
+} from '@mysten/sui/client';
 
 export type NetworkEnvType =
     | { network: Exclude<Network, Network.Custom>; customRpcUrl: null }

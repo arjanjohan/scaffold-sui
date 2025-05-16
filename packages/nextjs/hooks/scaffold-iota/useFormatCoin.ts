@@ -2,9 +2,9 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@iota/dapp-kit';
-import { CoinMetadata } from '@iota/iota-sdk/client';
-import { IOTA_DECIMALS, IOTA_TYPE_ARG } from '@iota/iota-sdk/utils';
+import { useIotaClient } from '@mysten/dapp-kit';
+import { CoinMetadata } from '@mysten/sui/client';
+import { IOTA_DECIMALS, IOTA_TYPE_ARG } from '@mysten/sui/utils';
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';

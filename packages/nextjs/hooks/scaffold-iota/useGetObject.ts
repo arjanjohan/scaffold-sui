@@ -2,8 +2,8 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@iota/dapp-kit';
-import { normalizeIotaAddress } from '@iota/iota-sdk/utils';
+import { useIotaClient } from '@mysten/dapp-kit';
+import { normalizeIotaAddress } from '@mysten/sui/utils';
 import { useQuery } from '@tanstack/react-query';
 
 const defaultOptions = {

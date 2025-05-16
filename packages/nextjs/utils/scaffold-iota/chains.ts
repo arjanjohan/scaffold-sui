@@ -1,5 +1,5 @@
-import { getFullnodeUrl } from "@iota/iota-sdk/client";
-import { getFaucetHost } from "@iota/iota-sdk/faucet";
+import { getFullnodeUrl } from "@mysten/sui/client";
+import { getFaucetHost } from "@mysten/sui/faucet";
 
 export type Chain = {
   id: string;
