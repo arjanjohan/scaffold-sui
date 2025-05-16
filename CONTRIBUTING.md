@@ -1,18 +1,18 @@
-# Welcome to Scaffold IOTA Contributing Guide
+# Welcome to Scaffold Sui Contributing Guide
 
-Thank you for investing your time in contributing to Scaffold IOTA!
+Thank you for investing your time in contributing to Scaffold Sui!
 
 This guide aims to provide an overview of the contribution workflow to help us make the contribution process effective for everyone involved.
 
 ## About the Project
 
-Scaffold IOTA is a minimal and forkable repo providing builders with a starter kit to build decentralized applications on the IOTA blockchain.
+Scaffold Sui is a minimal and forkable repo providing builders with a starter kit to build decentralized applications on the Sui blockchain.
 
 Read the [README](README.md) to get an overview of the project.
 
 ### Vision
 
-The goal of Scaffold IOTA is to provide the primary building blocks for a decentralized application.
+The goal of Scaffold Sui is to provide the primary building blocks for a decentralized application.
 
 The repo can be forked to include integrations and more features, but we want to keep the master branch simple and minimal.
 
@@ -44,7 +44,7 @@ Issues should be used to report problems, request a new feature, or discuss pote
 
 #### Solve an issue
 
-Scan through our [existing issues](https://github.com/arjanjohan/scaffold-iota/issues) to find one that interests you.
+Scan through our [existing issues](https://github.com/arjanjohan/scaffold-sui/issues) to find one that interests you.
 
 If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you are welcome to assign it to yourself and open a PR with a fix for it.
 

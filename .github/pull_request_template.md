@@ -4,8 +4,8 @@ _Concise description of proposed changes, We recommend using screenshots and vid
 
 ## Additional Information
 
-- [ ] I have read the [contributing docs](/arjanjohan/scaffold-iota/blob/main/CONTRIBUTING.md) (if this is your first contribution)
-- [ ] This is not a duplicate of any [existing pull request](https://github.com/arjanjohan/scaffold-iota/pulls)
+- [ ] I have read the [contributing docs](/arjanjohan/scaffold-sui/blob/main/CONTRIBUTING.md) (if this is your first contribution)
+- [ ] This is not a duplicate of any [existing pull request](https://github.com/arjanjohan/scaffold-sui/pulls)
 
 ## Related Issues
 
