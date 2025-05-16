@@ -5,7 +5,7 @@ import { useTargetNetwork } from "./useTargetNetwork";
 import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@mysten/sui/transactions";
 import modules from "~~/modules/deployedModules";
-import { ModuleEntryFunctionNames, ModuleEntryFunctions, ModuleName } from "~~/utils/scaffold-iota/module";
+import { ModuleEntryFunctionNames, ModuleEntryFunctions, ModuleName } from "~~/utils/scaffold-sui/module";
 
 const useScaffoldSubmitTransaction = <TModuleName extends ModuleName>(moduleName: TModuleName) => {
   const [transactionResponse, setTransactionResponse] = useState<TransactionResponse | null>(null);

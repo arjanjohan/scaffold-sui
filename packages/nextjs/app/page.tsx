@@ -5,9 +5,9 @@ import { useCurrentAccount } from "@mysten/dapp-kit";
 import type { NextPage } from "next";
 import { BookOpenIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-iota";
-import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
-import { getObjectUrl } from "~~/utils/scaffold-iota/getExplorerPaths";
-import { modules } from "~~/utils/scaffold-iota/module";
+import { useTargetNetwork } from "~~/hooks/scaffold-sui/useTargetNetwork";
+import { getObjectUrl } from "~~/utils/scaffold-sui/getExplorerPaths";
+import { modules } from "~~/utils/scaffold-sui/module";
 
 const Home: NextPage = () => {
   const account = useCurrentAccount();

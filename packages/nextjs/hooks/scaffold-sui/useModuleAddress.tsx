@@ -1,6 +1,6 @@
 import { useIotaClientContext } from "@mysten/dapp-kit";
 import modules from "~~/modules/deployedModules";
-import { ModuleName } from "~~/utils/scaffold-iota/module";
+import { ModuleName } from "~~/utils/scaffold-sui/module";
 
 export function useModuleAddress<TModuleName extends ModuleName>(
   moduleName: TModuleName,

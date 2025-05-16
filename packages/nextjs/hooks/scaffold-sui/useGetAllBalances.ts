@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useIotaClientQuery } from '@mysten/dapp-kit';
-import { filterAndSortTokenBalances } from '~~/utils/scaffold-iota/filterAndSortTokenBalances';
+import { filterAndSortTokenBalances } from '~~/utils/scaffold-sui/filterAndSortTokenBalances';
 import { useCoinsReFetchingConfig } from './';
 
 export function useGetAllBalances(address: string | null | undefined) {

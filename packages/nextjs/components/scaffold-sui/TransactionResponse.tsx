@@ -1,5 +1,5 @@
-import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
-import { getTransactionUrl } from "~~/utils/scaffold-iota/getExplorerPaths";
+import { useTargetNetwork } from "~~/hooks/scaffold-sui/useTargetNetwork";
+import { getTransactionUrl } from "~~/utils/scaffold-sui/getExplorerPaths";
 
 interface TransactionResponseProps {
   transactionResponse: {

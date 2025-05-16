@@ -1,4 +1,4 @@
-import { Chain, defaultChains } from "~~/utils/scaffold-iota/chains";
+import { Chain, defaultChains } from "~~/utils/scaffold-sui/chains";
 
 export type ScaffoldConfig = {
   targetNetworks: readonly Chain[];

@@ -4,7 +4,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { ScaffoldIotaAppWithProviders } from "~~/components/ScaffoldIotaAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
-import { getMetadata } from "~~/utils/scaffold-iota/getMetadata";
+import { getMetadata } from "~~/utils/scaffold-sui/getMetadata";
 
 export const metadata = getMetadata({
   title: "Scaffold IOTA App",

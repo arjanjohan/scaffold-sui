@@ -14,9 +14,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
 import { useOutsideClick } from "~~/hooks/scaffold-iota";
-import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
+import { useTargetNetwork } from "~~/hooks/scaffold-sui/useTargetNetwork";
 import scaffoldConfig from "~~/scaffold.config";
-import { notification } from "~~/utils/scaffold-iota/notification";
+import { notification } from "~~/utils/scaffold-sui/notification";
 
 type AddressInfoDropdownProps = {
   address: string;

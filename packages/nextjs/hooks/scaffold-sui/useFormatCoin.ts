@@ -9,7 +9,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 
-import { formatAmount } from '~~/utils/scaffold-iota/formatAmount';
+import { formatAmount } from '~~/utils/scaffold-sui/formatAmount';
 
 type FormattedCoin = [
     formattedBalance: string,

@@ -1,6 +1,6 @@
 import { IOTA_TYPE_ARG } from "@mysten/sui/utils";
 import { useGetCoinBalance } from "~~/hooks/scaffold-iota";
-import { getFormattedBalanceStr } from "~~/utils/scaffold-iota/ContentValue/CurrencyValue";
+import { getFormattedBalanceStr } from "~~/utils/scaffold-sui/ContentValue/CurrencyValue";
 
 type BalanceProps = {
   address: string;

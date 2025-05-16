@@ -4,8 +4,8 @@ import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { BlockieAvatar } from "~~/components/scaffold-iota";
-import { useTargetNetwork } from "~~/hooks/scaffold-iota/useTargetNetwork";
-import { getAddressUrl } from "~~/utils/scaffold-iota/getExplorerPaths";
+import { useTargetNetwork } from "~~/hooks/scaffold-sui/useTargetNetwork";
+import { getAddressUrl } from "~~/utils/scaffold-sui/getExplorerPaths";
 
 type AddressProps = {
   address?: string;

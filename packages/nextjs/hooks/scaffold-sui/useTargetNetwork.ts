@@ -1,6 +1,6 @@
 import { useIotaClientContext } from "@mysten/dapp-kit";
 import scaffoldConfig from "~~/scaffold.config";
-import { Chain } from "~~/utils/scaffold-iota/chains";
+import { Chain } from "~~/utils/scaffold-sui/chains";
 
 /**
  * Retrieves the connected wallet's network from scaffold.config or defaults to the 0th network in the list if the wallet is not connected.

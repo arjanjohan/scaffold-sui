@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import { NextPage } from "next";
 import { Address } from "~~/components/scaffold-iota";
-import { TransactionResponse, TransactionResponseType } from "~~/components/scaffold-iota/TransactionResponse";
-import { useGetObject } from "~~/hooks/scaffold-iota/useGetObject";
-import { useScaffoldGetObject } from "~~/hooks/scaffold-iota/useScaffoldGetObject";
-import useScaffoldSubmitTransaction from "~~/hooks/scaffold-iota/useScaffoldSubmitTransaction";
+import { TransactionResponse, TransactionResponseType } from "~~/components/scaffold-sui/TransactionResponse";
+import { useGetObject } from "~~/hooks/scaffold-sui/useGetObject";
+import { useScaffoldGetObject } from "~~/hooks/scaffold-sui/useScaffoldGetObject";
+import useScaffoldSubmitTransaction from "~~/hooks/scaffold-sui/useScaffoldSubmitTransaction";
 
-// import { DebugFunctionParams } from "~~/utils/scaffold-iota/module";
+// import { DebugFunctionParams } from "~~/utils/scaffold-sui/module";
 
 const CounterPage: NextPage = () => {
   const moduleName = "counter";
