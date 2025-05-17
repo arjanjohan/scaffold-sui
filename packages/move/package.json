@@ -3,15 +3,15 @@
   "packageManager": "yarn@3.2.3",
   "scripts": {
     "client": "ts-node utils/client.ts",
-    "chain": "RUST_LOG=\"off,iota_node=info\" iota start --force-regenesis --with-faucet",
+    "chain": "RUST_LOG=\"off,sui_node=info\" sui start --force-regenesis --with-faucet",
     "deploy": " ts-node utils/deploy.ts publish && ts-node utils/load-modules.ts",
-    "compile": "iota move build",
-    "test": "iota move test",
-    "format": "iota move fmt",
-    "document": "iota move build --doc"
+    "compile": "sui move build",
+    "test": "sui move test",
+    "format": "sui move fmt",
+    "document": "sui move build --doc"
   },
   "dependencies": {
-    "@mysten/sui": "^0.6.0",
+    "@mysten/sui": "^1.29.1",
     "axios": "^1.8.4",
     "got": "11.8.6",
     "js-yaml": "^4.1.0",

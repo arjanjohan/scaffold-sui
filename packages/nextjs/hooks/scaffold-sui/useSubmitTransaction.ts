@@ -24,12 +24,12 @@ const useSubmitTransaction = (moduleName: string, moduleAddress: string) => {
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
 
   const currentAccount = useCurrentAccount();
-  const iotaClient = useSuiClient();
+  const suiClient = useSuiClient();
   const { data: normalizedModule } = useNormalizedMoveModule(moduleAddress, moduleName);
 
   const { mutateAsync: signAndExecuteTransaction } = useSignAndExecuteTransaction({
     execute: async ({ bytes, signature }) =>
-      await iotaClient.executeTransactionBlock({
+      await suiClient.executeTransactionBlock({
         transactionBlock: bytes,
         signature,
         options: {
