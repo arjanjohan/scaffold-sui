@@ -2,6 +2,9 @@ import React from "react";
 
 const APTOS_DECIMALS = 8;
 
+export const SUI_TYPE_ARG = "0x2::sui::SUI";
+export const SUI_DECIMALS = 9;
+
 function trimRight(rightSide: string) {
   while (rightSide.endsWith("0")) {
     rightSide = rightSide.slice(0, -1);

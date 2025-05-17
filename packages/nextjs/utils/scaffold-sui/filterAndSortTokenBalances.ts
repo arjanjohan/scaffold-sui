@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { type CoinBalance } from '@mysten/sui/client';
-import { getCoinSymbol } from '~~/hooks/scaffold-iota';
+import { getCoinSymbol } from '~~/hooks/scaffold-sui';
 
 /**
  * Filter and sort token balances by symbol and total balance.

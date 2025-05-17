@@ -2,7 +2,7 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@mysten/dapp-kit';
+import { useSuiClient } from '@mysten/dapp-kit';
 import { PaginatedObjectsResponse, type IotaObjectDataFilter } from '@mysten/sui/client';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -13,7 +13,7 @@ export function useGetOwnedObjects(
     filter?: IotaObjectDataFilter,
     maxObjectRequests = MAX_OBJECTS_PER_REQ,
 ) {
-    const client = useIotaClient();
+    const client = useSuiClient();
     return useInfiniteQuery<PaginatedObjectsResponse>({
         initialPageParam: null,
         queryKey: ['get-owned-objects', address, filter, maxObjectRequests],

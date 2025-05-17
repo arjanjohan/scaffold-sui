@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import { NextPage } from "next";
-import { Address } from "~~/components/scaffold-iota";
+import { Address } from "~~/components/scaffold-sui";
 import { TransactionResponse, TransactionResponseType } from "~~/components/scaffold-sui/TransactionResponse";
 import { useGetObject } from "~~/hooks/scaffold-sui/useGetObject";
 import { useScaffoldGetObject } from "~~/hooks/scaffold-sui/useScaffoldGetObject";
@@ -120,8 +120,8 @@ const CounterPage: NextPage = () => {
     <div className="flex items-center flex-col flex-grow">
       {/* Contract Info Section */}
       <div className="flex flex-col items-center bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl p-6 mt-8 w-full max-w-lg">
-        <div className="text-xl">IOTA Move Counter</div>
-        <p className="text-sm mb-2">A simple shared counter on the IOTA blockchain.</p>
+        <div className="text-xl">Sui Move Counter</div>
+        <p className="text-sm mb-2">A simple shared counter on the Sui blockchain.</p>
         <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
           <p className="my-2 font-medium">Smart contract address:</p>
           <Address address={moduleAddress} />
@@ -137,7 +137,7 @@ const CounterPage: NextPage = () => {
       {/* Create Counter Section */}
       <div className="flex flex-col items-center space-y-4 bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 p-6 mt-8 w-full max-w-lg">
         <h2 className="text-lg font-semibold">Create New Counter</h2>
-        <p className="text-sm">Create a new shared counter on the IOTA blockchain.</p>
+        <p className="text-sm">Create a new shared counter on the Sui blockchain.</p>
         <button className="btn btn-primary w-full max-w-xs" disabled={!account} onClick={createCounter}>
           Create Counter
         </button>

@@ -1,26 +1,26 @@
 import "@mysten/dapp-kit/dist/index.css";
 import "@radix-ui/themes/styles.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { ScaffoldIotaAppWithProviders } from "~~/components/ScaffoldIotaAppWithProviders";
+import { ScaffoldSuiAppWithProviders } from "~~/components/ScaffoldSuiAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-sui/getMetadata";
 
 export const metadata = getMetadata({
-  title: "Scaffold IOTA App",
-  description: "Built with 🏗 Scaffold IOTA",
+  title: "Scaffold Sui App",
+  description: "Built with 🏗 Scaffold Sui",
 });
 
-const ScaffoldIotaApp = ({ children }: { children: React.ReactNode }) => {
+const ScaffoldSuiApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
       <body>
         <ThemeProvider enableSystem={false} defaultTheme="dark">
-          <ScaffoldIotaAppWithProviders>{children}</ScaffoldIotaAppWithProviders>
+          <ScaffoldSuiAppWithProviders>{children}</ScaffoldSuiAppWithProviders>
         </ThemeProvider>
       </body>
     </html>
   );
 };
 
-export default ScaffoldIotaApp;
+export default ScaffoldSuiApp;

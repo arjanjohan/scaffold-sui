@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNormalizedMoveModule } from "./useNormalizedMoveModule";
 import { type TransactionResponse } from "./useSubmitTransaction";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@mysten/sui/transactions";
 import modules from "~~/modules/deployedModules";
 import { ModuleEntryFunctionNames, ModuleEntryFunctions, ModuleName } from "~~/utils/scaffold-sui/module";
@@ -12,7 +12,7 @@ const useScaffoldSubmitTransaction = <TModuleName extends ModuleName>(moduleName
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
 
   const currentAccount = useCurrentAccount();
-  const iotaClient = useIotaClient();
+  const suiClient = useSuiClient();
   const { targetNetwork } = useTargetNetwork();
 
   // Get module address from deployed modules if not provided
@@ -22,7 +22,7 @@ const useScaffoldSubmitTransaction = <TModuleName extends ModuleName>(moduleName
 
   const { mutateAsync: signAndExecuteTransaction } = useSignAndExecuteTransaction({
     execute: async ({ bytes, signature }) =>
-      await iotaClient.executeTransactionBlock({
+      await suiClient.executeTransactionBlock({
         transactionBlock: bytes,
         signature,
         options: {

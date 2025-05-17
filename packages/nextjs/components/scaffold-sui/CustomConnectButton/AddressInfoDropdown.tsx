@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDisconnectWallet } from "@mysten/dapp-kit";
-import { getFaucetHost, requestIotaFromFaucetV0 } from "@mysten/sui/faucet";
+import { getFaucetHost, requestSuiFromFaucetV2 } from "@mysten/sui/faucet";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {
   ArrowLeftEndOnRectangleIcon,
@@ -12,8 +12,8 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar } from "~~/components/scaffold-iota";
-import { useOutsideClick } from "~~/hooks/scaffold-iota";
+import { BlockieAvatar } from "~~/components/scaffold-sui";
+import { useOutsideClick } from "~~/hooks/scaffold-sui";
 import { useTargetNetwork } from "~~/hooks/scaffold-sui/useTargetNetwork";
 import scaffoldConfig from "~~/scaffold.config";
 import { notification } from "~~/utils/scaffold-sui/notification";
@@ -41,7 +41,7 @@ export const AddressInfoDropdown = ({ address, blockExplorerAddressLink }: Addre
     const notificationId = notification.loading("Requesting tokens from faucet...");
     try {
       setIsFaucetLoading(true);
-      await requestIotaFromFaucetV0({
+      await requestSuiFromFaucetV2({
         host: getFaucetHost(targetNetwork.id),
         recipient: address,
       });

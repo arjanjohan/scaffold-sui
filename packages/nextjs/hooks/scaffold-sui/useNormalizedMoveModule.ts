@@ -2,7 +2,7 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@mysten/dapp-kit';
+import { useSuiClient } from '@mysten/dapp-kit';
 import { type IotaMoveNormalizedModule } from '@mysten/sui/src/client';
 import { type UseQueryResult, useQuery } from '@tanstack/react-query';
 
@@ -10,7 +10,7 @@ export function useNormalizedMoveModule(
     packageId?: string | null,
     moduleName?: string | null,
 ): UseQueryResult<IotaMoveNormalizedModule, Error> {
-    const client = useIotaClient();
+    const client = useSuiClient();
     return useQuery<IotaMoveNormalizedModule, Error>({
         queryKey: ['normalized-module', packageId, moduleName],
         queryFn: async () =>

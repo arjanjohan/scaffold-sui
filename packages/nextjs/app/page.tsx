@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import type { NextPage } from "next";
 import { BookOpenIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-iota";
+import { Address } from "~~/components/scaffold-sui";
 import { useTargetNetwork } from "~~/hooks/scaffold-sui/useTargetNetwork";
 import { getObjectUrl } from "~~/utils/scaffold-sui/getExplorerPaths";
 import { modules } from "~~/utils/scaffold-sui/module";
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <div className="px-5">
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold IOTA</span>
+            <span className="block text-4xl font-bold">Scaffold Sui</span>
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BookOpenIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Learn about all Scaffold IOTA features and how to use them on the{" "}
+                Learn about all Scaffold Sui features and how to use them on the{" "}
                 <Link href="/docs" passHref className="link">
                   Documentation
                 </Link>{" "}

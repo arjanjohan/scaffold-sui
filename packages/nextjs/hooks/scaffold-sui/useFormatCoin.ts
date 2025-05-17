@@ -2,9 +2,9 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@mysten/dapp-kit';
+import { useSuiClient } from '@mysten/dapp-kit';
 import { CoinMetadata } from '@mysten/sui/client';
-import { IOTA_DECIMALS, IOTA_TYPE_ARG } from '@mysten/sui/utils';
+import { SUI_DECIMALS, SUI_TYPE_ARG } from '~~/utils/scaffold-sui/ContentValue/CurrencyValue';
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
@@ -52,7 +52,7 @@ const SYMBOL_TRUNCATE_LENGTH = 5;
 const NAME_TRUNCATE_LENGTH = 10;
 
 export function useCoinMetadata(coinType?: string | null) {
-    const client = useIotaClient();
+    const client = useSuiClient();
     return useQuery({
         queryKey: ['coin-metadata', coinType],
         queryFn: async () => {
@@ -63,8 +63,8 @@ export function useCoinMetadata(coinType?: string | null) {
             }
 
             // Optimize the known case of IOTA to avoid a network call:
-            if (coinType === IOTA_TYPE_ARG) {
-                const metadata: CoinMetadata = IOTA_COIN_METADATA;
+            if (coinType === SUI_TYPE_ARG) {
+                const metadata: CoinMetadata = SUI_COIN_METADATA;
 
                 return metadata;
             }
@@ -93,13 +93,13 @@ export function useCoinMetadata(coinType?: string | null) {
     });
 }
 
-export const IOTA_COIN_METADATA: CoinMetadata = {
+export const SUI_COIN_METADATA: CoinMetadata = {
     id: null,
-    decimals: IOTA_DECIMALS,
+    decimals: SUI_DECIMALS,
     description: '',
     iconUrl: null,
-    name: 'IOTA',
-    symbol: 'IOTA',
+    name: 'SUI',
+    symbol: 'SUI',
 };
 
 interface FormatCoinOptions {
@@ -112,7 +112,7 @@ interface FormatCoinOptions {
 // the reset of the app as it is today, but it really shouldn't in a perfect world.
 export function useFormatCoin({
     balance,
-    coinType = IOTA_TYPE_ARG,
+    coinType = SUI_TYPE_ARG,
     format = CoinFormat.ROUNDED,
     showSign = false,
 }: FormatCoinOptions): FormattedCoin {

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@mysten/dapp-kit';
+import { useSuiClient } from '@mysten/dapp-kit';
 import { useQuery } from '@tanstack/react-query';
 
 const MAX_COINS_PER_REQUEST = 10;
@@ -10,7 +10,7 @@ export function useGetCoinBalance(
     address?: string | null,
     maxCoinsPerRequest = MAX_COINS_PER_REQUEST,
 ) {
-    const client = useIotaClient();
+    const client = useSuiClient();
     const query = useQuery({
         queryKey: ['get-coins', address, coinType],
         queryFn: async () => {

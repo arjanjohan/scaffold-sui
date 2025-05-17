@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowTopRightOnSquareIcon, Bars3Icon } from "@heroicons/react/24/outline";
-import { CustomConnectButton } from "~~/components/scaffold-iota";
-import { useOutsideClick } from "~~/hooks/scaffold-iota";
+import { CustomConnectButton } from "~~/components/scaffold-sui";
+import { useOutsideClick } from "~~/hooks/scaffold-sui";
 
 type HeaderMenuLink = {
   label: string;
@@ -25,7 +25,7 @@ export const menuLinks: HeaderMenuLink[] = [
   },
   {
     label: "Docs",
-    href: "https://scaffold-iota-docs.vercel.app",
+    href: "https://scaffold-Sui-docs.vercel.app",
     icon: <ArrowTopRightOnSquareIcon className="h-4 w-4" />,
   },
 ];
@@ -100,8 +100,8 @@ export const Header = () => {
             <Image alt="SM logo" className="cursor-pointer" fill src="/logo.png" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold IOTA</span>
-            <span className="text-xs">IOTA dev stack</span>
+            <span className="font-bold leading-tight">Scaffold Sui</span>
+            <span className="text-xs">Sui dev stack</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">

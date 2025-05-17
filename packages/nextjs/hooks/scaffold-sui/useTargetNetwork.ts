@@ -1,4 +1,4 @@
-import { useIotaClientContext } from "@mysten/dapp-kit";
+import { useSuiClientContext } from "@mysten/dapp-kit";
 import scaffoldConfig from "~~/scaffold.config";
 import { Chain } from "~~/utils/scaffold-sui/chains";
 
@@ -12,7 +12,7 @@ export function useTargetNetwork(): {
   setTargetNetwork: (network: Chain) => void;
   availableNetworks: readonly Chain[];
 } {
-  const ctx = useIotaClientContext();
+  const ctx = useSuiClientContext();
   const targetNetwork = scaffoldConfig.targetNetworks.find(n => n.id === ctx.network) as Chain;
 
   const setTargetNetwork = (network: Chain) => {

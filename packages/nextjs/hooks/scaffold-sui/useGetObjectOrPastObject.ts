@@ -1,10 +1,10 @@
 // Copyright (c) 2025 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { useIotaClient } from '@mysten/dapp-kit';
-import { normalizeIotaAddress } from '@mysten/sui/utils';
+import { useSuiClient } from '@mysten/dapp-kit';
+import { normalizeSuiAddress } from '@mysten/sui/utils';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { IotaObjectResponse } from '@mysten/sui/client';
+import { SuiObjectResponse } from '@mysten/sui/client';
 
 const DEFAULT_GET_OBJECT_OPTIONS = {
     showType: true,
@@ -15,15 +15,15 @@ const DEFAULT_GET_OBJECT_OPTIONS = {
     showDisplay: true,
 };
 
-interface UseGetObjectOrPastObject extends IotaObjectResponse {
+interface UseGetObjectOrPastObject extends SuiObjectResponse {
     isViewingPastVersion: boolean;
 }
 
 export function useGetObjectOrPastObject(
     objectId?: string | null,
 ): UseQueryResult<UseGetObjectOrPastObject> {
-    const normalizedObjId = objectId && normalizeIotaAddress(objectId);
-    const client = useIotaClient();
+    const normalizedObjId = objectId && normalizeSuiAddress(objectId);
+    const client = useSuiClient();
     return useQuery({
         queryKey: ['object-or-past-object', normalizedObjId],
         async queryFn() {
@@ -41,11 +41,11 @@ export function useGetObjectOrPastObject(
                 getObjectResponse?.error?.code === 'deleted';
 
             /**
-             * Calls tryGetPastObject and maps cases to a IotaObjectResponse
+             * Calls tryGetPastObject and maps cases to a SuiObjectResponse
              */
             const tryFindPastVersionOfObject = async (
                 objectId: string,
-            ): Promise<IotaObjectResponse> => {
+            ): Promise<SuiObjectResponse> => {
                 const txsWithObjectInput = await client.queryTransactionBlocks({
                     filter: { InputObject: objectId },
                     options: {
@@ -105,14 +105,14 @@ export function useGetObjectOrPastObject(
                 }
             };
 
-            const iotaObjectResponse = shouldTryFindPastVersion
+            const suiObjectResponse = shouldTryFindPastVersion
                 ? await tryFindPastVersionOfObject(normalizedObjId)
                 : getObjectResponse;
 
-            const isViewingPastVersion = shouldTryFindPastVersion && iotaObjectResponse.data;
+            const isViewingPastVersion = shouldTryFindPastVersion && suiObjectResponse.data;
 
             return {
-                ...iotaObjectResponse,
+                ...suiObjectResponse,
                 isViewingPastVersion,
             };
         },

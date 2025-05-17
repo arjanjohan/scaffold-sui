@@ -3,7 +3,7 @@
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
-import { Balance } from "~~/components/scaffold-iota";
+import { Balance } from "~~/components/scaffold-sui";
 import { useTargetNetwork } from "~~/hooks/scaffold-sui/useTargetNetwork";
 import { getAddressUrl } from "~~/utils/scaffold-sui/getExplorerPaths";
 

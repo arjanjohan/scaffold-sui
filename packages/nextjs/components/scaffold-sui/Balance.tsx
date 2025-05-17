@@ -1,6 +1,5 @@
-import { IOTA_TYPE_ARG } from "@mysten/sui/utils";
-import { useGetCoinBalance } from "~~/hooks/scaffold-iota";
-import { getFormattedBalanceStr } from "~~/utils/scaffold-sui/ContentValue/CurrencyValue";
+import { useGetCoinBalance } from "~~/hooks/scaffold-sui";
+import { getFormattedBalanceStr, SUI_TYPE_ARG } from "~~/utils/scaffold-sui/ContentValue/CurrencyValue";
 
 type BalanceProps = {
   address: string;
@@ -8,7 +7,7 @@ type BalanceProps = {
   coinType?: string;
 };
 
-export const Balance = ({ address, decimals = 9, coinType = IOTA_TYPE_ARG }: BalanceProps) => {
+export const Balance = ({ address, decimals = 9, coinType = SUI_TYPE_ARG }: BalanceProps) => {
   const { balance, isLoading, isError } = useGetCoinBalance(coinType, address);
 
   if (isLoading) {
@@ -34,7 +33,7 @@ export const Balance = ({ address, decimals = 9, coinType = IOTA_TYPE_ARG }: Bal
     <div className="w-full flex items-center justify-center">
       <>
         <span>{getFormattedBalanceStr(balance.toString(), decimals)}</span>
-        <span className="text-[0.8em] font-bold ml-1">IOTA</span>
+        <span className="text-[0.8em] font-bold ml-1">SUI</span>
       </>
     </div>
   );

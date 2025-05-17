@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNormalizedMoveModule } from "./useNormalizedMoveModule";
-import { useCurrentAccount, useIotaClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClient, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { Transaction, getPureBcsSchema, normalizedTypeToMoveTypeSignature } from "@mysten/sui/transactions";
 
 export type TransactionResponse = TransactionResponseOnSubmission | TransactionResponseOnError;
@@ -24,7 +24,7 @@ const useSubmitTransaction = (moduleName: string, moduleAddress: string) => {
   const [transactionInProcess, setTransactionInProcess] = useState<boolean>(false);
 
   const currentAccount = useCurrentAccount();
-  const iotaClient = useIotaClient();
+  const iotaClient = useSuiClient();
   const { data: normalizedModule } = useNormalizedMoveModule(moduleAddress, moduleName);
 
   const { mutateAsync: signAndExecuteTransaction } = useSignAndExecuteTransaction({

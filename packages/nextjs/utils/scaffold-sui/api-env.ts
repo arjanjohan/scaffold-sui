@@ -18,7 +18,7 @@ export function getCustomNetwork(rpc: string = ''): NetworkConfiguration {
         name: 'Custom RPC',
         id: Network.Custom,
         url: rpc,
-        chain: 'iota:unknown',
+        chain: 'sui:unknown',
         explorer: getNetwork(getDefaultNetwork()).explorer,
     };
 }

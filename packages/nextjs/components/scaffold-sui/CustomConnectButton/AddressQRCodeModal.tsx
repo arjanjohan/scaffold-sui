@@ -1,5 +1,5 @@
 import { QRCodeSVG } from "qrcode.react";
-import { Address } from "~~/components/scaffold-iota";
+import { Address } from "~~/components/scaffold-sui";
 
 type AddressQRCodeModalProps = {
   address: string;
