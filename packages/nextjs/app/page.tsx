@@ -49,7 +49,7 @@ const Home: NextPage = () => {
               <BookOpenIcon className="h-8 w-8 fill-secondary" />
               <p>
                 Learn about all Scaffold Sui features and how to use them on the{" "}
-                <Link href="/docs" passHref className="link">
+                <Link href="https://scaffold-sui-docs.vercel.app/" target="_blank" rel="noopener noreferrer">
                   Documentation
                 </Link>{" "}
                 page.

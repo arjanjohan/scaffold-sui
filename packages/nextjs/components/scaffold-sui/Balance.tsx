@@ -1,5 +1,5 @@
 import { useGetCoinBalance } from "~~/hooks/scaffold-sui";
-import { getFormattedBalanceStr, SUI_TYPE_ARG } from "~~/utils/scaffold-sui/ContentValue/CurrencyValue";
+import { SUI_TYPE_ARG, getFormattedBalanceStr } from "~~/utils/scaffold-sui/ContentValue/CurrencyValue";
 
 type BalanceProps = {
   address: string;

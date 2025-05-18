@@ -1,7 +1,5 @@
 import React from "react";
 
-const APTOS_DECIMALS = 8;
-
 export const SUI_TYPE_ARG = "0x2::sui::SUI";
 export const SUI_DECIMALS = 9;
 
@@ -19,7 +17,7 @@ export function getFormattedBalanceStr(balance: string, decimals?: number, fixed
   }
 
   const len = balance.length;
-  decimals = decimals || APTOS_DECIMALS;
+  decimals = decimals || SUI_DECIMALS;
 
   // If length is less than decimals, pad with 0s to decimals length and return
   if (len <= decimals) {

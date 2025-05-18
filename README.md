@@ -89,14 +89,18 @@ Visit your app on: `http://localhost:3000`. You can tweak the app config in `pac
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit your Move tests in: `packages/move/test`. To run test use `yarn test`
 
+## TODO
+During the hackathon I was not able to complete all features of this project. These features and fixes will be implemented after the code freeze for judging:
+- Type safety for function arguments
+- Network switching functionality
+
 ## Links
 
 - [Demo video](TODO)
 - [Pitchdeck](TODO)
 - [Documentation](https://scaffold-sui-docs.vercel.app/)
-- [Example deployment](TODO)
+- [Example deployment](https://scaffold-sui.vercel.app/)
 - [Github](https://github.com/arjanjohan/scaffold-sui)
-- [Documentation Github](https://github.com/arjanjohan/scaffold-sui-docs)
 
 ## Credits
 

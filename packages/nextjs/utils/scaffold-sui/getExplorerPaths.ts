@@ -13,11 +13,11 @@ function getExplorerUrl(
 ) {
   const networkConfig = defaultChains[network];
   const explorer = networkConfig?.explorer;
+  console.log("explorer", explorer);
+  console.log("path", path);
 
   const url = getUrlWithDeviceId(new URL(path, explorer));
-  if (explorer) {
-    url.searchParams.append("network", network);
-  }
+
 
   return url.href;
 }
@@ -28,17 +28,17 @@ export function getObjectUrl(
   customExplorer?: string,
   moduleName?: string | null,
 ) {
-  return getExplorerUrl(`/object/${objectID}${moduleName ? `?module=${moduleName}` : ""}`, network, customExplorer);
+  return getExplorerUrl(`object/${objectID}${moduleName ? `?module=${moduleName}` : ""}`, network, customExplorer);
 }
 
 export function getTransactionUrl(txDigest: string, network: NetworkId, customExplorer?: string) {
-  return getExplorerUrl(`/txblock/${encodeURIComponent(txDigest)}`, network, customExplorer);
+  return getExplorerUrl(`txblock/${encodeURIComponent(txDigest)}`, network, customExplorer);
 }
 
 export function getAddressUrl(address: string, network: NetworkId, customExplorer?: string) {
-  return getExplorerUrl(`/address/${address}`, network, customExplorer);
+  return getExplorerUrl(`address/${address}`, network, customExplorer);
 }
 
 export function getValidatorUrl(address: string, network: NetworkId, customExplorer?: string) {
-  return getExplorerUrl(`/validator/${address}`, network, customExplorer);
+  return getExplorerUrl(`validator/${address}`, network, customExplorer);
 }
