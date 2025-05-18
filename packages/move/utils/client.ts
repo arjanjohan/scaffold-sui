@@ -22,11 +22,11 @@ type DefaultConfigs = {
 const DEFAULT_CONFIGS: DefaultConfigs = {
     testnet: {
         alias: 'testnet',
-        rpc: 'https://api.testnet.iota.cafe'
+        rpc: 'https://fullnode.testnet.sui.io:443'
     },
     devnet: {
         alias: 'devnet',
-        rpc: 'https://api.devnet.iota.cafe'
+        rpc: 'https://fullnode.devnet.sui.io:443'
     }
 };
 
@@ -38,14 +38,14 @@ process.on('SIGINT', () => {
 
 // Function to check if client config exists
 function clientConfigExists(): boolean {
-    const configPath = `${os.homedir()}/.iota/iota_config/client.yaml`;
+    const configPath = `${os.homedir()}/.sui/sui_config/client.yaml`;
     return fs.existsSync(configPath);
 }
 
 // Function to get available environments and active env
 function getEnvsInfo(): { envs: string[], activeEnv: string } {
     try {
-        const output = execSync('iota client envs --json', { encoding: 'utf-8' });
+        const output = execSync('sui client envs --json', { encoding: 'utf-8' });
         const [envs, activeEnv] = JSON.parse(output);
         return {
             envs: envs.map((env: any) => env.alias),
@@ -92,7 +92,7 @@ async function handleClientSwitch() {
             const selectedEnv = envs[index];
 
             try {
-                execSync(`iota client switch --env ${selectedEnv}`, { stdio: 'inherit' });
+                execSync(`sui client switch --env ${selectedEnv}`, { stdio: 'inherit' });
                 console.log(`\nSuccessfully switched to environment: ${selectedEnv}`);
             } catch (error) {
                 console.error('Failed to switch environment:', error instanceof Error ? error.message : 'Unknown error');
@@ -109,12 +109,12 @@ function displaySetupOptions(availableDefaults: string[]) {
     let optionIndex = 1;
 
     if (availableDefaults.includes('testnet')) {
-        console.log(`${optionIndex}. IOTA Testnet`);
+        console.log(`${optionIndex}. Sui Testnet`);
         optionIndex++;
     }
 
     if (availableDefaults.includes('devnet')) {
-        console.log(`${optionIndex}. IOTA Devnet`);
+        console.log(`${optionIndex}. Sui Devnet`);
         optionIndex++;
     }
 
@@ -142,7 +142,7 @@ async function getCustomSetupDetails(): Promise<{ alias: string, rpc: string }> 
 // Function to run command with interactive input
 function runInteractiveCommand(command: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        const child = execFile('iota', command.split(' '), (error) => {
+        const child = execFile('sui', command.split(' '), (error) => {
             if (error) {
                 reject(error);
                 return;

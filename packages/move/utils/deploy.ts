@@ -9,7 +9,7 @@ interface DeploymentOutput {
 
 async function main(): Promise<void> {
   // Build deploy command
-  const deployCommand = 'iota client publish';
+  const deployCommand = 'sui client publish';
 
   try {
     // Execute deploy command and capture output

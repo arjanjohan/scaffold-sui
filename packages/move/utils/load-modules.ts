@@ -10,7 +10,7 @@ interface DeploymentOutput {
   timestamp: string;
 }
 
-interface IotaObjectResponse {
+interface SuiObjectResponse {
   type: string;
   id: string;
   content?: {
@@ -50,7 +50,7 @@ interface DeployedModules {
 }
 
 function getCurrentNetwork(): string {
-  const envOutput = execSync('iota client envs --json', { encoding: 'utf-8' });
+  const envOutput = execSync('sui client envs --json', { encoding: 'utf-8' });
   const [envConfigs, currentAlias] = JSON.parse(envOutput);
 
   // Only accept devnet or testnet
@@ -253,8 +253,8 @@ async function getDeployedContractIds(): Promise<string[]> {
     const packageIds: string[] = [];
     for (const id of uniqueIds) {
       try {
-        const result = execSync(`iota client object --json ${id}`).toString();
-        const objectData = JSON.parse(result) as IotaObjectResponse;
+        const result = execSync(`sui client object --json ${id}`).toString();
+        const objectData = JSON.parse(result) as SuiObjectResponse;
         if (objectData.type === "package") {
           packageIds.push(id);
         }
@@ -276,7 +276,7 @@ async function main(): Promise<void> {
   const network = getCurrentNetwork();
   console.log('Current network:', network);
 
-  const accountAddress = execSync('iota client active-address').toString().trim().replace(/^0x/, '');
+  const accountAddress = execSync('sui client active-address').toString().trim().replace(/^0x/, '');
   const deployedContractIds = await getDeployedContractIds();
 
   console.log('Account address:', accountAddress);
@@ -290,8 +290,8 @@ async function main(): Promise<void> {
 
   for (const contractId of deployedContractIds) {
     try {
-      const result = execSync(`iota client object --json ${contractId}`).toString();
-      const objectData = JSON.parse(result) as IotaObjectResponse;
+      const result = execSync(`sui client object --json ${contractId}`).toString();
+      const objectData = JSON.parse(result) as SuiObjectResponse;
 
       if (objectData.type === "package" && objectData.content?.disassembled) {
         for (const [moduleName, content] of Object.entries(objectData.content.disassembled)) {
