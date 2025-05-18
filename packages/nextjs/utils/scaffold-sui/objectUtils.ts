@@ -2,7 +2,7 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { type ObjectOwner, type IotaObjectResponse } from '@mysten/sui/client';
+import { type ObjectOwner, type SuiObjectResponse } from '@mysten/sui/client';
 
 import { findIPFSvalue } from './stringUtils';
 
@@ -21,7 +21,7 @@ export function parseImageURL(display?: Record<string, string> | null): string {
     return '';
 }
 
-export function parseObjectType(data: IotaObjectResponse): string {
+export function parseObjectType(data: SuiObjectResponse): string {
     if (data.data?.content?.dataType === 'package') {
         return 'Move Package';
     }
@@ -34,7 +34,7 @@ export function getOwnerStr(owner: ObjectOwner | string): string {
         if ('ObjectOwner' in owner) return owner.ObjectOwner;
         if ('Shared' in owner) return 'Shared';
     }
-    return owner;
+    return owner as string;
 }
 
 export const checkIsPropertyType = (value: unknown): boolean =>

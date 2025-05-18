@@ -3,14 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useSuiClient } from '@mysten/dapp-kit';
-import { PaginatedObjectsResponse, type IotaObjectDataFilter } from '@mysten/sui/client';
+import { PaginatedObjectsResponse, type SuiObjectDataFilter } from '@mysten/sui/client';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 const MAX_OBJECTS_PER_REQ = 6;
 
 export function useGetOwnedObjects(
     address?: string | null,
-    filter?: IotaObjectDataFilter,
+    filter?: SuiObjectDataFilter,
     maxObjectRequests = MAX_OBJECTS_PER_REQ,
 ) {
     const client = useSuiClient();

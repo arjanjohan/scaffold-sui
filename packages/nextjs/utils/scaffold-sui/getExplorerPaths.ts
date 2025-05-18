@@ -1,7 +1,9 @@
 // Copyright (c) Mysten Labs, Inc.
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
-import { Network, NetworkId, getNetwork } from "@mysten/sui/client";
+// import { Network, NetworkId, getNetwork } from "@mysten/sui/client";
+
+import { defaultChains, NetworkId } from "./chains";
 
 function getExplorerUrl(
   path: string,
@@ -9,8 +11,8 @@ function getExplorerUrl(
   customExplorer?: string,
   getUrlWithDeviceId: (url: URL) => URL = url => url,
 ) {
-  const networkConfig = getNetwork(network);
-  const explorer = network === Network.Custom ? customExplorer : networkConfig?.explorer;
+  const networkConfig = defaultChains[network];
+  const explorer = networkConfig?.explorer;
 
   const url = getUrlWithDeviceId(new URL(path, explorer));
   if (explorer) {

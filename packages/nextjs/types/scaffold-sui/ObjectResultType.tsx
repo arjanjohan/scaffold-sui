@@ -4,7 +4,7 @@
 
 import { parseObjectType } from '~~/utils/scaffold-sui/objectUtils';
 
-import type { IotaObjectResponse, ObjectOwner, MoveStruct } from '@mysten/sui/client';
+import type { SuiObjectResponse, ObjectOwner, MoveStruct } from '@mysten/sui/client';
 
 export type DataType = {
     id: string;
@@ -36,7 +36,7 @@ export type DataType = {
  * TODO: We should redesign the rendering logic and data model
  * to make this more extensible and customizable for different Move types
  */
-export function translate(o: IotaObjectResponse): DataType {
+export function translate(o: SuiObjectResponse): DataType {
     if (o.data) {
         return {
             id: o.data.objectId,

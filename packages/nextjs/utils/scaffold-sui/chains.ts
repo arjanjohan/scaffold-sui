@@ -1,12 +1,16 @@
 import { getFullnodeUrl } from "@mysten/sui/client";
 import { getFaucetHost } from "@mysten/sui/faucet";
 
+export const networks = ["devnet", "testnet"] as const;
+export type NetworkId = typeof networks[number];
+
 export type Chain = {
-  id: string;
+  id: NetworkId;
   name: string;
   url: string;
   isTestnet: boolean;
   faucet?: string;
+  explorer?: string;
 };
 
 export const defaultChains = {
@@ -16,6 +20,7 @@ export const defaultChains = {
     url: getFullnodeUrl("devnet"),
     isTestnet: true,
     faucet: getFaucetHost("devnet"),
+    explorer: "https://suiscan.xyz/devnet/",
   },
   testnet: {
     id: "testnet",
@@ -23,5 +28,6 @@ export const defaultChains = {
     url: getFullnodeUrl("testnet"),
     isTestnet: true,
     faucet: getFaucetHost("testnet"),
+    explorer: "https://suiscan.xyz/testnet/",
   },
-} as const satisfies Record<string, Chain>;
+} as const satisfies Record<NetworkId, Chain>;

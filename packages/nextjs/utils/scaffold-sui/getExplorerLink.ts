@@ -2,9 +2,10 @@
 // Modifications Copyright (c) 2024 IOTA Stiftung
 // SPDX-License-Identifier: Apache-2.0
 
-import { getCustomNetwork } from '.';
-import { getNetwork, Network, NetworkId } from '@mysten/sui/client';
+// import { getCustomNetwork } from '.';
+// import { getNetwork, Network, NetworkId } from '@mysten/sui/client';
 import { getAddressUrl, getObjectUrl, getTransactionUrl, getValidatorUrl } from '.';
+import { NetworkId } from './chains';
 
 export enum ExplorerLinkType {
     Address = 'address',
@@ -47,19 +48,15 @@ export function getExplorerLink(
     const validator = type === ExplorerLinkType.Validator ? linkConfig.validator : null;
     const moduleName = type === ExplorerLinkType.Object ? linkConfig.moduleName : null;
 
-    // fallback to localhost if customRPC is not set
-    const customExplorer =
-        network === Network.Custom ? getCustomNetwork().explorer : getNetwork(network).explorer;
-
     if (!address) return null;
     switch (type) {
         case ExplorerLinkType.Address:
-            return address && getAddressUrl(address, network, customExplorer);
+            return address && getAddressUrl(address, network);
         case ExplorerLinkType.Object:
-            return objectID && getObjectUrl(objectID, network, customExplorer, moduleName);
+            return objectID && getObjectUrl(objectID, network, undefined, moduleName);
         case ExplorerLinkType.Transaction:
-            return transactionID && getTransactionUrl(transactionID, network, customExplorer);
+            return transactionID && getTransactionUrl(transactionID, network);
         case ExplorerLinkType.Validator:
-            return validator && getValidatorUrl(validator, network, customExplorer);
+            return validator && getValidatorUrl(validator, network);
     }
 }
