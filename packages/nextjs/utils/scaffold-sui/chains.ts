@@ -16,7 +16,7 @@ export type Chain = {
 export const defaultChains = {
   devnet: {
     id: "devnet",
-    name: "IOTA Devnet",
+    name: "Sui Devnet",
     url: getFullnodeUrl("devnet"),
     isTestnet: true,
     faucet: getFaucetHost("devnet"),
@@ -24,7 +24,7 @@ export const defaultChains = {
   },
   testnet: {
     id: "testnet",
-    name: "IOTA Testnet",
+    name: "Sui Testnet",
     url: getFullnodeUrl("testnet"),
     isTestnet: true,
     faucet: getFaucetHost("testnet"),

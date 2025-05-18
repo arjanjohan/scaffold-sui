@@ -4,8 +4,8 @@
 
 ![logo](/assets/logo.png)
 <h4 align="center">
-  <a href="TODO">Documentation</a> |
-  <a href="TODO">Website</a>
+  <a href="https://scaffold-sui-docs.vercel.app/">Documentation</a> |
+  <a href="github.com/arjanjohan/scaffold-sui">GitHub</a>
 </h4>
 </div>
 
@@ -81,7 +81,7 @@ yarn start
 
 Visit your app on: `http://localhost:3000`. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
-**Note:** For a comprehensive list of available yarn commands and their usage, please refer to our [documentation](TODO).
+**Note:** For a comprehensive list of available yarn commands and their usage, please refer to our [documentation](https://scaffold-sui-docs.vercel.app/).
 
 **What's next**:
 
@@ -91,10 +91,10 @@ Visit your app on: `http://localhost:3000`. You can tweak the app config in `pac
 
 ## Links
 
-- [Demo video]()
-- [Pitchdeck]()
-- [Documentation]()
-- [Example deployment]()
+- [Demo video](TODO)
+- [Pitchdeck](TODO)
+- [Documentation](https://scaffold-sui-docs.vercel.app/)
+- [Example deployment](TODO)
 - [Github](https://github.com/arjanjohan/scaffold-sui)
 - [Documentation Github](https://github.com/arjanjohan/scaffold-sui-docs)
 

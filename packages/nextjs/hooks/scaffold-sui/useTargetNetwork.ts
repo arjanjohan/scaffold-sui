@@ -16,11 +16,8 @@ export function useTargetNetwork(): {
   const targetNetwork = scaffoldConfig.targetNetworks.find(n => n.id === ctx.network) as Chain;
 
   const setTargetNetwork = (network: Chain) => {
-    console.log("Switching to network:", network.id);
-    console.log("IOTA Context:", ctx.networks);
     if (ctx?.selectNetwork) {
-      ctx.selectNetwork(network.id); // TODO: figure out why this is not working
-      console.log("Network switched to:", ctx.network);
+      ctx.selectNetwork(network.id);
     }
   };
 

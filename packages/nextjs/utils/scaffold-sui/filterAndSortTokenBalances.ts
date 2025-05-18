@@ -6,7 +6,7 @@ import { getCoinSymbol } from '~~/hooks/scaffold-sui';
 
 /**
  * Filter and sort token balances by symbol and total balance.
- * IOTA tokens are always sorted first.
+ * Sui tokens are always sorted first.
  * @param tokens The token balances to filter and sort.
  * @returns The filtered and sorted token balances.
  */
