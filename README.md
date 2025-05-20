@@ -96,7 +96,7 @@ During the hackathon I was not able to complete all features of this project. Th
 
 ## Links
 
-- [Demo video](https://youtu.be/GlnUIfwLTgk)
+- [Demo video](https://youtu.be/YBZbcr15X8o)
 - [Pitchdeck](https://docs.google.com/presentation/d/14rY1lgwnhnU059cIRH9F8-P9CTURvT96ZYj1n9cNiJ0/edit?usp=sharing)
 - [Documentation](https://scaffold-sui-docs.vercel.app/)
 - [Example deployment](https://scaffold-sui.vercel.app/)
