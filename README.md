@@ -5,7 +5,7 @@
 ![logo](/assets/logo.png)
 <h4 align="center">
   <a href="https://scaffold-sui-docs.vercel.app/">Documentation</a> |
-  <a href="github.com/arjanjohan/scaffold-sui">GitHub</a>
+  <a href="https://scaffold-sui.vercel.app/">Example deployment</a>
 </h4>
 </div>
 
@@ -96,8 +96,8 @@ During the hackathon I was not able to complete all features of this project. Th
 
 ## Links
 
-- [Demo video](TODO)
-- [Pitchdeck](TODO)
+- [Demo video](https://youtu.be/GlnUIfwLTgk)
+- [Pitchdeck](https://docs.google.com/presentation/d/14rY1lgwnhnU059cIRH9F8-P9CTURvT96ZYj1n9cNiJ0/edit?usp=sharing)
 - [Documentation](https://scaffold-sui-docs.vercel.app/)
 - [Example deployment](https://scaffold-sui.vercel.app/)
 - [Github](https://github.com/arjanjohan/scaffold-sui)
