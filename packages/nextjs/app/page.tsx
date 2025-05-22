@@ -49,7 +49,7 @@ const Home: NextPage = () => {
               <BookOpenIcon className="h-8 w-8 fill-secondary" />
               <p>
                 Learn about all Scaffold Sui features and how to use them on the{" "}
-                <Link href="https://scaffold-sui-docs.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <Link href="https://scaffold-sui-docs.vercel.app/" target="_blank" rel="noopener noreferrer" className="link">
                   Documentation
                 </Link>{" "}
                 page.
@@ -58,9 +58,10 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Explore your local transactions with the {/* <Link href="/blockexplorer" passHref className="link"> */}
-                Block Explorer {/* </Link>{" "} */}
-                tab. <b>Coming soon...</b>
+                Want to start your own project with Scaffold Sui? Fork the repository on{" "}
+                <a href="https://github.com/arjanjohan/scaffold-sui" target="_blank" rel="noopener noreferrer" className="link">
+                  GitHub
+                </a>
               </p>
             </div>
           </div>

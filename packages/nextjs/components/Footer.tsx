@@ -13,7 +13,7 @@ export const Footer = () => {
       </div>
       <div className="w-full flex justify-center items-center text-sm">
         <p className="m-0">Built with </p>
-        <a className="ml-1 link" href="https://github.com/arjanjohan/scaffold-sui" target="_blank" rel="noreferrer">
+        <a href="https://github.com/arjanjohan/scaffold-sui" target="_blank" rel="noopener noreferrer" className="m-1 link">
           Scaffold Sui
         </a>
       </div>
