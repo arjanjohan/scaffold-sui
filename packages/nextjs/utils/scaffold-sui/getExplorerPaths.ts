@@ -32,7 +32,7 @@ export function getObjectUrl(
 }
 
 export function getTransactionUrl(txDigest: string, network: NetworkId, customExplorer?: string) {
-  return getExplorerUrl(`txblock/${encodeURIComponent(txDigest)}`, network, customExplorer);
+  return getExplorerUrl(`tx/${encodeURIComponent(txDigest)}`, network, customExplorer);
 }
 
 export function getAddressUrl(address: string, network: NetworkId, customExplorer?: string) {
